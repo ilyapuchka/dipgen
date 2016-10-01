@@ -10,28 +10,34 @@ import Foundation
 
 public indirect enum Template {
     
-    case container(name: String, registrations: [Template])
+    case container(name: String, registrations: [Template], uiContainer: Bool)
     case registration(name: String?, scope: String, registerAs: String?, tag: String?, factory: (type: String, constructor: String), implements: [String], resolvingProperties: [PropertyProcessingResult], storyboardInstantiatable: Template?)
     case implements(types: [String])
     case resolvingProperties(properties: [(name: String, tag: String?, injectAs: String?)])
     case resolveProperty(name: String, tag: String?, injectAs: String?)
     case factory(type: String, constructor: String)
     case storyboardInstantiatable(type: String)
+    case uiContainer()
     
     enum Format: String {
-        case container              = "public let %@ = DependencyContainer { container in \n\tunowned let container = container\n\n%@}\n"
+        case container              = "public let %@ = DependencyContainer { container in \n\tunowned let container = container\n%@\n%@}\n"
+        case uiContainer            = "DependencyContainer.uiContainers.append(container)\n"
         case registration           = "%@container.register(.%@, %@%@factory: %@)\n"
         case implements             = ".implements(%@)\n"
         case resolvingProperties    = ".resolvingProperties { container, resolved in \n%@}\n"
-        case resolveProperty        = "resolved.%@ = try container.resolve(tag: %@)%@\n"
+        case resolveProperty        = "resolved.%@ = try container.resolve(%@)%@\n"
         case factory                = "%@.%@"
         case storyboardInstantiatable   = "extension %@: StoryboardInstantiatable {}\n"
     }
     
     func description(indent: Int = 0) -> String {
         switch self {
-        case let .container(name, registrations):
-            return String(.container, name, String(registrations, indent: indent + 1))
+        case let .container(name, registrations, uiContainer):
+            let uiContainer = uiContainer ? Template.uiContainer().description(indent) : ""
+            return String(.container, name, uiContainer, String(registrations, indent: indent + 1))
+            
+        case .uiContainer:
+            return String(.uiContainer, indent: indent + 1)
             
         case let .registration(name, scope, registerAs, tag, factory, implements, resolvingProperties, _):
             let implements = Template.implements(types: implements)

@@ -33,14 +33,24 @@ extension String {
      - parameter containers: Result of files processing
      */
     public init(containers: FileProcessingResult) {
-        var content = containers.map({ Template.container(name: $0.0, registrations: $0.1).description() }).joinWithSeparator("\n")
         var storyboardInstantiatables: [Template] = []
-        for registration in containers.values.flatten() {
-            guard case let .registration(_, _, _, _, _, _, _, storyboardInstantiatable) = registration else { continue }
-            if let storyboardInstantiatable = storyboardInstantiatable {
-                storyboardInstantiatables.append(storyboardInstantiatable)
+        var uiContainers: Set<String> = []
+        for (container, registrations) in containers {
+            for registration in registrations {
+                guard case let .registration(_, _, _, _, _, _, _, storyboardInstantiatable) = registration else { continue }
+                if let storyboardInstantiatable = storyboardInstantiatable {
+                    storyboardInstantiatables.append(storyboardInstantiatable)
+                    uiContainers.insert(container)
+                }
             }
         }
+        var content = containers.map({ name, registrations in
+            Template.container(
+                name: name,
+                registrations: registrations,
+                uiContainer: uiContainers.contains(name)
+                ).description()
+        }).joinWithSeparator("\n")
         if !storyboardInstantiatables.isEmpty {
             let extensions = storyboardInstantiatables.map({ $0.description() }).joinWithSeparator("\n")
             content = "import DipUI\n\n\(extensions)\n\(content)"
