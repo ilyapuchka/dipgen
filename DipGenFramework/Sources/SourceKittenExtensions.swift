@@ -29,6 +29,20 @@ extension Structure {
     
 }
 
+extension File {
+    
+    var imports: [String] {
+        return contents.lines().flatMap({ $0.importModule })
+    }
+    
+}
+
+extension Line {
+    var importModule: String? {
+        return content.hasPrefix("import") ? content: nil
+    }
+}
+
 public typealias SourceKitDeclaration = [String: SourceKitRepresentable]
 private let docCommentCharacterSet = NSCharacterSet(charactersInString: "/*\t\n")
 public typealias DocGenerator = (SourceKitDeclaration)->(String?)

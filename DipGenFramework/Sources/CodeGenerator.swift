@@ -32,7 +32,7 @@ extension String {
      
      - parameter containers: Result of files processing
      */
-    public init(containers: FileProcessingResult) {
+    public init(containers: FileProcessingResult, files: [File]) {
         var storyboardInstantiatables: [Template] = []
         var uiContainers: Set<String> = []
         for (container, registrations) in containers {
@@ -51,14 +51,17 @@ extension String {
                 uiContainer: uiContainers.contains(name)
                 ).description()
         }).joinWithSeparator("\n")
+        var imports = files.flatMap({ $0.imports })
+
         if !storyboardInstantiatables.isEmpty {
             let extensions = storyboardInstantiatables.map({ $0.description() }).joinWithSeparator("\n")
-            content = "import DipUI\n\n\(extensions)\n\(content)"
+            imports.append("import DipUI")
+            content = "\(extensions)\n\(content)"
         }
         else {
-            content = "import Dip\n\n\(content)"
+            imports.append("import Dip")
         }
-        self = content
+        self = "\(Set(imports).joinWithSeparator("\n"))\n\n\(content)"
     }
     
 }
