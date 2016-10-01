@@ -1,4 +1,11 @@
+import UIKit
+
 protocol SomeProtocol {}
+class RootWireframe {}
+class AddWireframe {}
+class ListPresenter {}
+
+class ListViewController: UIViewController {}
 
 /**
  Some Real docs
@@ -23,8 +30,8 @@ class ListWireframe: NSObject, SomeProtocol {
     let listPresenter: ListPresenter?
     /**@dip.inject*/let rootWireframe: RootWireframe
     
-    private let _listViewController = InjectedWeak<ListViewController>(tag: ListViewControllerIdentifier)
-    var listViewController : ListViewController? { return _listViewController.value }
+//    private let _listViewController = InjectedWeak<ListViewController>(tag: ListViewControllerIdentifier)
+//    var listViewController : ListViewController? { return _listViewController.value }
     
     init(rootWireframe: RootWireframe, addWireframe: AddWireframe) {
         self.rootWireframe = rootWireframe
@@ -42,14 +49,6 @@ class ListWireframe: NSObject, SomeProtocol {
         self.rootWireframe = rootWireframe
         self.addWireframe = addWireframe
         self.listPresenter = listPresenter
-    }
-    
-    func presentAddInterface() {
-        listViewController?.performSegueWithIdentifier("add", sender: nil)
-    }
-    
-    func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        addWireframe.prepareForSegue(segue)
     }
     
 }

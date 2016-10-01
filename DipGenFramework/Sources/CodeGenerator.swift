@@ -9,16 +9,6 @@
 import Foundation
 import SourceKittenFramework
 
-extension NSFileManager {
-    
-    public func swiftFiles(at path: String) throws -> [File] {
-        let files = try contentsOfDirectoryAtPath(path)
-        let swiftFiles = files.filter({ $0.isSwiftFile() })
-        return swiftFiles.flatMap(File.init)
-    }
-    
-}
-
 ///Dictionary of registrations grouped by then names of containers.
 public typealias FileProcessingResult = [String: [Template]]
 
@@ -77,16 +67,24 @@ public class FileProcessor {
         self.file = file
     }
     
+    public convenience init?(path: String) {
+        guard let file = File(path: path) else { return nil }
+        self.init(file: file)
+    }
+    
     /**
      Process all declarations in a file.
      
      - returns: Processing result
      */
-    public func process() -> FileProcessingResult {
+    public func process() throws -> FileProcessingResult {
+        guard let substructure = structure.substructure else {
+            throw NSError(domain: "", code: 0, userInfo: nil)
+        }
         var containers: FileProcessingResult = [:]
         lastProcessedDocRange = 0..<1
         
-        for declaration in structure.substructure {
+        for declaration in substructure {
             guard declaration.kind == .Class else { continue }
             let classDecl = declaration as! SourceKitDeclaration
             

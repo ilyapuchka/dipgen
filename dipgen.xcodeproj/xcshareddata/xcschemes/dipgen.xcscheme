@@ -61,6 +61,38 @@
             ReferencedContainer = "container:dipgen.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <EnvironmentVariables>
+         <EnvironmentVariable
+            key = "PROJECT_FILE_PATH"
+            value = "DipGenTest/DipGenTest.xcodeproj"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "SOURCE_ROOT"
+            value = "/Users/ilya/Documents/Developer/iPhoneProjects/dipgen/DipGenFrameworkTests/Sources/DipGenTest"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "DEVELOPER_DIR"
+            value = "/Applications/Xcode.app/Contents/Developer"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "SDKROOT"
+            value = "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "BUILT_PRODUCTS_DIR"
+            value = "/Users/ilya/Library/Developer/Xcode/DerivedData/dipgen-bpzvhiymfnixdkchotqiwqvnyggl/Build/Products/Debug"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "TARGET_NAME"
+            value = "DipGenTest"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+      </EnvironmentVariables>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>

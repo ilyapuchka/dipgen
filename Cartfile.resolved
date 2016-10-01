@@ -1,3 +1,4 @@
 github "drmohundro/SWXMLHash" "2.5.1"
+github "ilyapuchka/Xcode.swift" "02ec78373eea65ee426961d88ad97c57a771efaa"
 github "behrang/YamlSwift" "1.5.0"
 github "jpsim/SourceKitten" "0.14.1"

@@ -19,13 +19,14 @@
 		0980D92E1DA008050088923B /* Yaml.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 649CABFB1D7EDA3F00AA3C44 /* Yaml.framework */; };
 		0980D9311DA0081D0088923B /* DipGenFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 092993601D9FE5C300DA3EB7 /* DipGenFramework.framework */; };
 		0980D9331DA009780088923B /* SourceKittenFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 649CABF91D7EDA3F00AA3C44 /* SourceKittenFramework.framework */; };
-		0980D9341DA009780088923B /* SWXMLHash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 649CABFA1D7EDA3F00AA3C44 /* SWXMLHash.framework */; };
-		0980D9351DA009780088923B /* Yaml.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 649CABFB1D7EDA3F00AA3C44 /* Yaml.framework */; };
+		0980D9581DA028270088923B /* Xcode.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0980D9361DA022760088923B /* Xcode.framework */; };
+		0980D95D1DA039710088923B /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0980D9591DA038920088923B /* Environment.swift */; };
+		0980D9611DA0399C0088923B /* XCProjectFileExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0980D95B1DA039020088923B /* XCProjectFileExtensions.swift */; };
+		0980D9641DA039C10088923B /* Xcode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0980D9361DA022760088923B /* Xcode.framework */; };
 		649CABF31D7ED9E700AA3C44 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649CABF21D7ED9E700AA3C44 /* main.swift */; };
 		649CAC011D7EDB2000AA3C44 /* SourceKittenFramework.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 649CABF91D7EDA3F00AA3C44 /* SourceKittenFramework.framework */; };
 		649CAC021D7EDB2000AA3C44 /* SWXMLHash.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 649CABFA1D7EDA3F00AA3C44 /* SWXMLHash.framework */; };
 		649CAC031D7EDB2000AA3C44 /* Yaml.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 649CABFB1D7EDA3F00AA3C44 /* Yaml.framework */; };
-		649CAC071D7EDDF800AA3C44 /* input.swift in CopyFiles */ = {isa = PBXBuildFile; fileRef = 649CAC051D7EDDDB00AA3C44 /* input.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +44,13 @@
 			remoteGlobalIDString = 0929935F1D9FE5C300DA3EB7;
 			remoteInfo = DipGenFramework;
 		};
+		09DEBC5C1DA026DB00FC81D9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0980D93F1DA026670088923B /* DipGenTest.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 0980D94A1DA026BB0088923B;
+			remoteInfo = DipGenTest;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -52,7 +60,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 16;
 			files = (
-				649CAC071D7EDDF800AA3C44 /* input.swift in CopyFiles */,
+				0980D9581DA028270088923B /* Xcode.framework in CopyFiles */,
 				649CAC011D7EDB2000AA3C44 /* SourceKittenFramework.framework in CopyFiles */,
 				649CAC021D7EDB2000AA3C44 /* SWXMLHash.framework in CopyFiles */,
 				649CAC031D7EDB2000AA3C44 /* Yaml.framework in CopyFiles */,
@@ -72,12 +80,15 @@
 		0929937D1D9FE6F800DA3EB7 /* SourceKittenExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SourceKittenExtensions.swift; sourceTree = "<group>"; };
 		0929937F1D9FE72F00DA3EB7 /* CodeGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CodeGenerator.swift; sourceTree = "<group>"; };
 		0980D9251D9FF8CF0088923B /* StringExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
+		0980D9361DA022760088923B /* Xcode.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Xcode.framework; path = Carthage/Build/Mac/Xcode.framework; sourceTree = "<group>"; };
+		0980D93F1DA026670088923B /* DipGenTest.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DipGenTest.xcodeproj; path = DipGenTest/DipGenTest.xcodeproj; sourceTree = "<group>"; };
+		0980D9591DA038920088923B /* Environment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
+		0980D95B1DA039020088923B /* XCProjectFileExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XCProjectFileExtensions.swift; sourceTree = "<group>"; };
 		649CABEF1D7ED9E700AA3C44 /* dipgen */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = dipgen; sourceTree = BUILT_PRODUCTS_DIR; };
 		649CABF21D7ED9E700AA3C44 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		649CABF91D7EDA3F00AA3C44 /* SourceKittenFramework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SourceKittenFramework.framework; path = Carthage/Build/Mac/SourceKittenFramework.framework; sourceTree = "<group>"; };
 		649CABFA1D7EDA3F00AA3C44 /* SWXMLHash.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SWXMLHash.framework; path = Carthage/Build/Mac/SWXMLHash.framework; sourceTree = "<group>"; };
 		649CABFB1D7EDA3F00AA3C44 /* Yaml.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Yaml.framework; path = Carthage/Build/Mac/Yaml.framework; sourceTree = "<group>"; };
-		649CAC051D7EDDDB00AA3C44 /* input.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = input.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,9 +115,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				0980D9311DA0081D0088923B /* DipGenFramework.framework in Frameworks */,
+				0980D9641DA039C10088923B /* Xcode.framework in Frameworks */,
 				0980D9331DA009780088923B /* SourceKittenFramework.framework in Frameworks */,
-				0980D9341DA009780088923B /* SWXMLHash.framework in Frameworks */,
-				0980D9351DA009780088923B /* Yaml.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -155,7 +165,7 @@
 		0980D9291DA006D30088923B /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				649CAC051D7EDDDB00AA3C44 /* input.swift */,
+				0980D93F1DA026670088923B /* DipGenTest.xcodeproj */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -166,6 +176,14 @@
 				0929936F1D9FE5C400DA3EB7 /* Info.plist */,
 			);
 			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		0980D9401DA026670088923B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				09DEBC5D1DA026DB00FC81D9 /* DipGenTest.framework */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		649CABE61D7ED9E700AA3C44 = {
@@ -192,6 +210,8 @@
 		649CABF11D7ED9E700AA3C44 /* dipgen */ = {
 			isa = PBXGroup;
 			children = (
+				0980D9591DA038920088923B /* Environment.swift */,
+				0980D95B1DA039020088923B /* XCProjectFileExtensions.swift */,
 				649CABF21D7ED9E700AA3C44 /* main.swift */,
 			);
 			path = dipgen;
@@ -200,6 +220,7 @@
 		649CABFF1D7EDA4500AA3C44 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0980D9361DA022760088923B /* Xcode.framework */,
 				649CABF91D7EDA3F00AA3C44 /* SourceKittenFramework.framework */,
 				649CABFA1D7EDA3F00AA3C44 /* SWXMLHash.framework */,
 				649CABFB1D7EDA3F00AA3C44 /* Yaml.framework */,
@@ -264,6 +285,7 @@
 				649CABEB1D7ED9E700AA3C44 /* Sources */,
 				649CABEC1D7ED9E700AA3C44 /* Frameworks */,
 				649CABED1D7ED9E700AA3C44 /* CopyFiles */,
+				0980D9561DA0271A0088923B /* Copy Test Project */,
 			);
 			buildRules = (
 			);
@@ -309,6 +331,12 @@
 			mainGroup = 649CABE61D7ED9E700AA3C44;
 			productRefGroup = 649CABF01D7ED9E700AA3C44 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 0980D9401DA026670088923B /* Products */;
+					ProjectRef = 0980D93F1DA026670088923B /* DipGenTest.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				649CABEE1D7ED9E700AA3C44 /* dipgen */,
@@ -317,6 +345,16 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		09DEBC5D1DA026DB00FC81D9 /* DipGenTest.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = DipGenTest.framework;
+			remoteRef = 09DEBC5C1DA026DB00FC81D9 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		0929935E1D9FE5C300DA3EB7 /* Resources */ = {
@@ -334,6 +372,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0980D9561DA0271A0088923B /* Copy Test Project */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Test Project";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "echo \"$BUILT_PRODUCTS_DIR\"\necho \"$DEVELOPER_DIR\"\necho \"$SDKROOT\"\necho \"$SOURCE_ROOT\"\n\ncp -r \"$SRCROOT/DipGenFrameworkTests/Sources/DipGenTest\" \"$BUILT_PRODUCTS_DIR\"";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		0929935B1D9FE5C300DA3EB7 /* Sources */ = {
@@ -360,6 +415,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				649CABF31D7ED9E700AA3C44 /* main.swift in Sources */,
+				0980D9611DA0399C0088923B /* XCProjectFileExtensions.swift in Sources */,
+				0980D95D1DA039710088923B /* Environment.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,10 +1,15 @@
 import Foundation
 import DipGenFramework
+import SourceKittenFramework
+import Xcode
 
 do {
-    let files = try NSFileManager.defaultManager().swiftFiles(at: ".")
-    let processingResult = files
-        .map({ FileProcessor(file: $0).process() })
+    let environment = try Environment(environment: NSProcessInfo().environment)
+    let project = try XCProjectFile(path: environment.projectFilePath)
+    let processingResult = try project.sourceFilesPaths(environment)
+        .filter({ $0.isSwiftFile() == true })
+        .flatMap(FileProcessor.init(path:))
+        .map({ try $0.process() })
         .reduce(FileProcessingResult(), combine: +)
     let content = String(containers: processingResult)
     try content.writeToFile("./output.swift", atomically: true, encoding: NSUTF8StringEncoding)

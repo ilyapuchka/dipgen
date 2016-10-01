@@ -23,8 +23,8 @@ extension Structure {
 extension Structure {
     
     ///Returns structure's subscructure
-    var substructure: [SourceKitRepresentable] {
-        return dictionary[Key.substructure] as! [SourceKitRepresentable]
+    var substructure: [SourceKitRepresentable]? {
+        return dictionary[Key.substructure] as? [SourceKitRepresentable]
     }
     
 }
