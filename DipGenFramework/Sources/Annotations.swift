@@ -16,6 +16,9 @@ enum DipAnnotation: String, CustomStringConvertible {
     ///Marks constructor as designated. It will be used by component's definition as a factory.
     ///Required if type has more than one constructor
     case designated
+    ///Constructor to use as factory
+    case constructor
+    ///Name of registration
     case name
     ///Optional tag to register component for
     case tag

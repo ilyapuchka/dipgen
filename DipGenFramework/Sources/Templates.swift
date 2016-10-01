@@ -11,7 +11,7 @@ import Foundation
 public indirect enum Template {
     
     case container(name: String, registrations: [Template])
-    case registration(name: String, scope: String, registerAs: String, tag: String?, factory: (type: String, constructor: String), implements: [String], resolvingProperties: [PropertyProcessingResult], storyboardInstantiatable: Template?)
+    case registration(name: String?, scope: String, registerAs: String?, tag: String?, factory: (type: String, constructor: String), implements: [String], resolvingProperties: [PropertyProcessingResult], storyboardInstantiatable: Template?)
     case implements(types: [String])
     case resolvingProperties(properties: [(name: String, tag: String?, injectAs: String?)])
     case resolveProperty(name: String, tag: String?, injectAs: String?)
@@ -20,7 +20,7 @@ public indirect enum Template {
     
     enum Format: String {
         case container              = "public let %@ = DependencyContainer { container in \n\tunowned let container = container\n\n%@}\n"
-        case registration           = "let %@ = container.register(.%@, type: %@.self, tag: %@, factory: %@)\n"
+        case registration           = "%@container.register(.%@, %@%@factory: %@)\n"
         case implements             = ".implements(%@)\n"
         case resolvingProperties    = ".resolvingProperties { container, resolved in \n%@}\n"
         case resolveProperty        = "resolved.%@ = try container.resolve(tag: %@)%@\n"
@@ -38,8 +38,11 @@ public indirect enum Template {
             let resolvingProperties = Template.resolvingProperties(properties: resolvingProperties)
             let factory = Template.factory(type: factory.type, constructor: factory.constructor)
             
-            return String(.registration, name, scope, registerAs,
-                (tag != nil ? "\"\(tag!)\"" : "nil"),
+            return String(.registration,
+                (name != nil ? "let \(name!) = " : ""),
+                scope,
+                (registerAs != nil ? "type: \(registerAs!).self, " : ""),
+                (tag != nil ? "tag: \"\(tag!)\", " : ""),
                 factory.description(),
                 indent: indent)
                 .appending(implements, indent: indent + 1)
@@ -57,7 +60,7 @@ public indirect enum Template {
             
         case let .resolveProperty(name, tag, injectAs):
             return String(.resolveProperty, name,
-                (tag != nil ? "\"\(tag!)\"" : "nil"),
+                (tag != nil ? "tag: \"\(tag!)\"" : ""),
                 (injectAs != nil ? " as \(injectAs!)" : ""),
                 indent: indent)
             

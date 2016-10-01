@@ -22,10 +22,6 @@ extension String {
         return containsString(annotation.description)
     }
     
-    var camelCased: String {
-        return String(characters.prefix(1)).lowercaseString + String(characters.dropFirst())
-    }
-    
     func trimmed(characters: String) -> String {
         return trimmed(NSCharacterSet(charactersInString: characters))
     }

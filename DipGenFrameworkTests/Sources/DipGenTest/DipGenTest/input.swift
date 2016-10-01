@@ -5,6 +5,11 @@ class RootWireframe {}
 class AddWireframe {}
 class ListPresenter {}
 
+/**
+ @dip.storyboardInstantiatable
+ 
+ @dip.constructor init(nibName:bundle:)
+ */
 class ListViewController: UIViewController {}
 
 /**
@@ -17,7 +22,6 @@ class ListViewController: UIViewController {}
  @dip.container listModule
  @dip.tag some tag
  @dip.implements NSObject, SomeProtocol
- @dip.storyboardInstantiatable
  */
 class ListWireframe: NSObject, SomeProtocol {
     

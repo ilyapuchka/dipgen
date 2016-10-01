@@ -111,8 +111,9 @@ public class FileProcessor {
         
         let type = declaration[Structure.Key.name] as! String
         var containerName = "baseContainer"
-        var definitionName = "_"
-        var registerAs = declaration[Structure.Key.name] as! String
+        var definitionName: String?
+        var registerAs: String?
+        var constructorToRegister: String?
         var tagToRegister: String?
         var scopeToRegister = "Shared"
         var implementsToRegister = [String]()
@@ -120,12 +121,11 @@ public class FileProcessor {
         var shouldRegister = false
         
         for line in classDocs.lines() {
-            if (line.contains(dipAnnotation: .register, modifier: { registerAs = $0 ?? registerAs }) ||
+            if (line.contains(dipAnnotation: .register, modifier: { registerAs = $0 }) ||
                 line.contains(dipAnnotation: .container, modifier: { containerName = $0 ?? containerName }) ||
                 line.contains(dipAnnotation: .scope, modifier: { scopeToRegister = $0 ?? scopeToRegister }) ||
-                line.contains(dipAnnotation: .name, modifier: { name in
-                    definitionName = name ?? type.camelCased
-                }) ||
+                line.contains(dipAnnotation: .name, modifier: { definitionName = $0 ?? definitionName }) ||
+                line.contains(dipAnnotation: .constructor, modifier: { constructorToRegister = $0 }) ||
                 line.contains(dipAnnotation: .tag, modifier: { tag in
                     tagToRegister = tag?.trimmed("\"")
                     if tagToRegister?.isEmpty == true {
@@ -145,16 +145,23 @@ public class FileProcessor {
             }
         }
         
-        let substructure = declaration[Structure.Key.substructure] as! [SourceKitRepresentable]
-        let propertiesToResolve = process(properties: substructure)
-        shouldRegister = shouldRegister || !propertiesToResolve.isEmpty
-        
-        let constructor = process(methods: substructure)
-        if constructor?.designated == true {
-            shouldRegister = shouldRegister || constructor != nil
+        let propertiesToResolve: [PropertyProcessingResult]
+        let constructor: MethodProcessingResult?
+        if let substructure = declaration[Structure.Key.substructure] as? [SourceKitRepresentable] {
+            propertiesToResolve = process(properties: substructure)
+            shouldRegister = shouldRegister || !propertiesToResolve.isEmpty
+            
+            constructor = process(methods: substructure)
+            if constructor?.designated == true {
+                shouldRegister = shouldRegister || constructor != nil
+            }
+        }
+        else {
+            propertiesToResolve = []
+            constructor = nil
         }
         
-        if shouldRegister, let constructor = constructor?.name {
+        if shouldRegister, let constructor = constructor?.name ?? constructorToRegister  {
             let registration = Template.registration(
                 name: definitionName,
                 scope: scopeToRegister,
