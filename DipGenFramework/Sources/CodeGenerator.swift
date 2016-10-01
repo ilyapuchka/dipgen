@@ -98,7 +98,7 @@ public class FileProcessor {
         lastProcessedDocRange = 0..<1
         
         for declaration in substructure {
-            guard declaration.kind == .Class else { continue }
+            guard declaration.kind == .Class || declaration.kind == .Extension else { continue }
             let classDecl = declaration as! SourceKitDeclaration
             
             if let (containerName, registration) = process(class: classDecl) {

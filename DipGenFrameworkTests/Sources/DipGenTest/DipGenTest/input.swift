@@ -12,8 +12,10 @@ class ListPresenter {}
  */
 class ListViewController: UIViewController {}
 
-/**@dip.register*/
-extension NSObject {}
+/**
+ @dip.register
+ */
+extension NSObject: SomeProtocol {}
 
 /**
  Some Real docs
