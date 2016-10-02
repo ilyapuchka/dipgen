@@ -61,6 +61,12 @@
             ReferencedContainer = "container:dipgen.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <CommandLineArguments>
+         <CommandLineArgument
+            argument = "--output DipGenTest/DipGenTest"
+            isEnabled = "YES">
+         </CommandLineArgument>
+      </CommandLineArguments>
       <EnvironmentVariables>
          <EnvironmentVariable
             key = "PROJECT_FILE_PATH"
