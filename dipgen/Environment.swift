@@ -10,6 +10,17 @@ import Xcode
 
 struct Environment {
     
+    enum Error: ErrorType, CustomStringConvertible {
+        case missing(String)
+        
+        var description: String {
+            switch self {
+            case let .missing(variable):
+                return "Missing environment variable \(variable)"
+            }
+        }
+    }
+    
     let projectFilePath: String
     let buildProductsDir: String
     let developerDir: String
@@ -18,22 +29,12 @@ struct Environment {
     let targetName: String
     
     init(environment: [String: String]) throws {
-        guard
-            let projectFilePath = environment["PROJECT_FILE_PATH"],
-            let buildProductsDir = environment["BUILT_PRODUCTS_DIR"],
-            let developerDir = environment["DEVELOPER_DIR"],
-            let sdkRoot = environment["SDKROOT"],
-            let sourceRoot = environment["SOURCE_ROOT"],
-            let targetName = environment["TARGET_NAME"] else {
-                //TODO: throw error
-                throw NSError(domain: "", code: 0, userInfo: nil)
-        }
-        self.projectFilePath = projectFilePath
-        self.buildProductsDir = buildProductsDir
-        self.developerDir = developerDir
-        self.sdkRoot = sdkRoot
-        self.sourceRoot = sourceRoot
-        self.targetName = targetName
+        projectFilePath    = try get("PROJECT_FILE_PATH", environment)
+        buildProductsDir   = try get("BUILT_PRODUCTS_DIR", environment)
+        developerDir       = try get("DEVELOPER_DIR", environment)
+        sdkRoot            = try get("SDKROOT", environment)
+        sourceRoot         = try get("SOURCE_ROOT", environment)
+        targetName         = try get("TARGET_NAME", environment)
     }
     
     func url(forSourceTreeFolder sourceTreeFolder: SourceTreeFolder) -> NSURL {
@@ -52,3 +53,9 @@ struct Environment {
     }
     
 }
+
+private func get(name: String, _ environment: [String: String]) throws -> String {
+    guard let value = environment[name] else { throw Environment.Error.missing(name) }
+    return value
+}
+
