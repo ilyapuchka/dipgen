@@ -17,16 +17,19 @@
 		0980D92C1DA008050088923B /* SourceKittenFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 649CABF91D7EDA3F00AA3C44 /* SourceKittenFramework.framework */; };
 		0980D92D1DA008050088923B /* SWXMLHash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 649CABFA1D7EDA3F00AA3C44 /* SWXMLHash.framework */; };
 		0980D92E1DA008050088923B /* Yaml.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 649CABFB1D7EDA3F00AA3C44 /* Yaml.framework */; };
-		0980D9311DA0081D0088923B /* DipGenFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 092993601D9FE5C300DA3EB7 /* DipGenFramework.framework */; };
-		0980D9331DA009780088923B /* SourceKittenFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 649CABF91D7EDA3F00AA3C44 /* SourceKittenFramework.framework */; };
-		0980D9581DA028270088923B /* Xcode.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0980D9361DA022760088923B /* Xcode.framework */; };
-		0980D95D1DA039710088923B /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0980D9591DA038920088923B /* Environment.swift */; };
-		0980D9611DA0399C0088923B /* XCProjectFileExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0980D95B1DA039020088923B /* XCProjectFileExtensions.swift */; };
-		0980D9641DA039C10088923B /* Xcode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0980D9361DA022760088923B /* Xcode.framework */; };
-		649CABF31D7ED9E700AA3C44 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649CABF21D7ED9E700AA3C44 /* main.swift */; };
-		649CAC011D7EDB2000AA3C44 /* SourceKittenFramework.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 649CABF91D7EDA3F00AA3C44 /* SourceKittenFramework.framework */; };
-		649CAC021D7EDB2000AA3C44 /* SWXMLHash.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 649CABFA1D7EDA3F00AA3C44 /* SWXMLHash.framework */; };
-		649CAC031D7EDB2000AA3C44 /* Yaml.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 649CABFB1D7EDA3F00AA3C44 /* Yaml.framework */; };
+		0980D97F1DA108AC0088923B /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0980D9591DA038920088923B /* Environment.swift */; };
+		0980D9801DA108AC0088923B /* XCProjectFileExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0980D95B1DA039020088923B /* XCProjectFileExtensions.swift */; };
+		0980D9811DA108AC0088923B /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649CABF21D7ED9E700AA3C44 /* main.swift */; };
+		0980D9821DA108DE0088923B /* DipGenFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 092993601D9FE5C300DA3EB7 /* DipGenFramework.framework */; };
+		0980D9831DA108E40088923B /* Xcode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0980D9361DA022760088923B /* Xcode.framework */; };
+		0980D9841DA108E40088923B /* SourceKittenFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 649CABF91D7EDA3F00AA3C44 /* SourceKittenFramework.framework */; };
+		0980D9851DA108E40088923B /* SWXMLHash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 649CABFA1D7EDA3F00AA3C44 /* SWXMLHash.framework */; };
+		0980D9861DA108E40088923B /* Yaml.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 649CABFB1D7EDA3F00AA3C44 /* Yaml.framework */; };
+		0980D9891DA109720088923B /* DipGenFramework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 092993601D9FE5C300DA3EB7 /* DipGenFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0980D98B1DA109A80088923B /* Xcode.framework in Embed Frameworks into DipGenFramework */ = {isa = PBXBuildFile; fileRef = 0980D9361DA022760088923B /* Xcode.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0980D98C1DA109A90088923B /* SourceKittenFramework.framework in Embed Frameworks into DipGenFramework */ = {isa = PBXBuildFile; fileRef = 649CABF91D7EDA3F00AA3C44 /* SourceKittenFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0980D98D1DA109A90088923B /* SWXMLHash.framework in Embed Frameworks into DipGenFramework */ = {isa = PBXBuildFile; fileRef = 649CABFA1D7EDA3F00AA3C44 /* SWXMLHash.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0980D98E1DA109A90088923B /* Yaml.framework in Embed Frameworks into DipGenFramework */ = {isa = PBXBuildFile; fileRef = 649CABFB1D7EDA3F00AA3C44 /* Yaml.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,7 +40,7 @@
 			remoteGlobalIDString = 0929935F1D9FE5C300DA3EB7;
 			remoteInfo = DipGenFramework;
 		};
-		0980D92F1DA008150088923B /* PBXContainerItemProxy */ = {
+		0980D97D1DA1089F0088923B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 649CABE71D7ED9E700AA3C44 /* Project object */;
 			proxyType = 1;
@@ -54,17 +57,29 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		649CABED1D7ED9E700AA3C44 /* CopyFiles */ = {
+		0980D9881DA1095F0088923B /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 12;
+			buildActionMask = 2147483647;
 			dstPath = "";
-			dstSubfolderSpec = 16;
+			dstSubfolderSpec = 10;
 			files = (
-				0980D9581DA028270088923B /* Xcode.framework in CopyFiles */,
-				649CAC011D7EDB2000AA3C44 /* SourceKittenFramework.framework in CopyFiles */,
-				649CAC021D7EDB2000AA3C44 /* SWXMLHash.framework in CopyFiles */,
-				649CAC031D7EDB2000AA3C44 /* Yaml.framework in CopyFiles */,
+				0980D9891DA109720088923B /* DipGenFramework.framework in Embed Frameworks */,
 			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0980D98A1DA109830088923B /* Embed Frameworks into DipGenFramework */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = DipGenFramework.framework/Versions/Current/Frameworks;
+			dstSubfolderSpec = 10;
+			files = (
+				0980D98B1DA109A80088923B /* Xcode.framework in Embed Frameworks into DipGenFramework */,
+				0980D98C1DA109A90088923B /* SourceKittenFramework.framework in Embed Frameworks into DipGenFramework */,
+				0980D98D1DA109A90088923B /* SWXMLHash.framework in Embed Frameworks into DipGenFramework */,
+				0980D98E1DA109A90088923B /* Yaml.framework in Embed Frameworks into DipGenFramework */,
+			);
+			name = "Embed Frameworks into DipGenFramework";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -84,7 +99,9 @@
 		0980D93F1DA026670088923B /* DipGenTest.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DipGenTest.xcodeproj; path = DipGenTest/DipGenTest.xcodeproj; sourceTree = "<group>"; };
 		0980D9591DA038920088923B /* Environment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		0980D95B1DA039020088923B /* XCProjectFileExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XCProjectFileExtensions.swift; sourceTree = "<group>"; };
-		649CABEF1D7ED9E700AA3C44 /* dipgen */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = dipgen; sourceTree = BUILT_PRODUCTS_DIR; };
+		0980D96A1DA107AE0088923B /* dipgen.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = dipgen.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0980D9731DA107AE0088923B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0980D9901DA10D840088923B /* Components.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Components.plist; sourceTree = "<group>"; };
 		649CABF21D7ED9E700AA3C44 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		649CABF91D7EDA3F00AA3C44 /* SourceKittenFramework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SourceKittenFramework.framework; path = Carthage/Build/Mac/SourceKittenFramework.framework; sourceTree = "<group>"; };
 		649CABFA1D7EDA3F00AA3C44 /* SWXMLHash.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SWXMLHash.framework; path = Carthage/Build/Mac/SWXMLHash.framework; sourceTree = "<group>"; };
@@ -110,13 +127,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		649CABEC1D7ED9E700AA3C44 /* Frameworks */ = {
+		0980D9671DA107AE0088923B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0980D9311DA0081D0088923B /* DipGenFramework.framework in Frameworks */,
-				0980D9641DA039C10088923B /* Xcode.framework in Frameworks */,
-				0980D9331DA009780088923B /* SourceKittenFramework.framework in Frameworks */,
+				0980D9821DA108DE0088923B /* DipGenFramework.framework in Frameworks */,
+				0980D9831DA108E40088923B /* Xcode.framework in Frameworks */,
+				0980D9841DA108E40088923B /* SourceKittenFramework.framework in Frameworks */,
+				0980D9851DA108E40088923B /* SWXMLHash.framework in Frameworks */,
+				0980D9861DA108E40088923B /* Yaml.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -186,6 +205,26 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		0980D96B1DA107AE0088923B /* dipgen */ = {
+			isa = PBXGroup;
+			children = (
+				0980D9791DA107EA0088923B /* Supporting Files */,
+				0980D9591DA038920088923B /* Environment.swift */,
+				0980D95B1DA039020088923B /* XCProjectFileExtensions.swift */,
+				649CABF21D7ED9E700AA3C44 /* main.swift */,
+			);
+			path = dipgen;
+			sourceTree = "<group>";
+		};
+		0980D9791DA107EA0088923B /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				0980D9901DA10D840088923B /* Components.plist */,
+				0980D9731DA107AE0088923B /* Info.plist */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		649CABE61D7ED9E700AA3C44 = {
 			isa = PBXGroup;
 			children = (
@@ -193,28 +232,18 @@
 				0929936C1D9FE5C400DA3EB7 /* DipGenFrameworkTests */,
 				649CABFF1D7EDA4500AA3C44 /* Frameworks */,
 				649CABF01D7ED9E700AA3C44 /* Products */,
-				649CABF11D7ED9E700AA3C44 /* dipgen */,
+				0980D96B1DA107AE0088923B /* dipgen */,
 			);
 			sourceTree = "<group>";
 		};
 		649CABF01D7ED9E700AA3C44 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				649CABEF1D7ED9E700AA3C44 /* dipgen */,
 				092993601D9FE5C300DA3EB7 /* DipGenFramework.framework */,
 				092993681D9FE5C400DA3EB7 /* DipGenFrameworkTests.xctest */,
+				0980D96A1DA107AE0088923B /* dipgen.app */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		649CABF11D7ED9E700AA3C44 /* dipgen */ = {
-			isa = PBXGroup;
-			children = (
-				0980D9591DA038920088923B /* Environment.swift */,
-				0980D95B1DA039020088923B /* XCProjectFileExtensions.swift */,
-				649CABF21D7ED9E700AA3C44 /* main.swift */,
-			);
-			path = dipgen;
 			sourceTree = "<group>";
 		};
 		649CABFF1D7EDA4500AA3C44 /* Frameworks */ = {
@@ -278,24 +307,26 @@
 			productReference = 092993681D9FE5C400DA3EB7 /* DipGenFrameworkTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		649CABEE1D7ED9E700AA3C44 /* dipgen */ = {
+		0980D9691DA107AE0088923B /* dipgen */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 649CABF61D7ED9E700AA3C44 /* Build configuration list for PBXNativeTarget "dipgen" */;
+			buildConfigurationList = 0980D9741DA107AE0088923B /* Build configuration list for PBXNativeTarget "dipgen" */;
 			buildPhases = (
-				649CABEB1D7ED9E700AA3C44 /* Sources */,
-				649CABEC1D7ED9E700AA3C44 /* Frameworks */,
-				649CABED1D7ED9E700AA3C44 /* CopyFiles */,
-				0980D9561DA0271A0088923B /* Copy Test Project */,
+				0980D9661DA107AE0088923B /* Sources */,
+				0980D9671DA107AE0088923B /* Frameworks */,
+				0980D9871DA109320088923B /* Extract CLI Tool */,
+				0980D9881DA1095F0088923B /* Embed Frameworks */,
+				0980D98A1DA109830088923B /* Embed Frameworks into DipGenFramework */,
+				0980D98F1DA109CE0088923B /* Embed Swift libraries into DipGenFramework.framework */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				0980D9301DA008150088923B /* PBXTargetDependency */,
+				0980D97E1DA1089F0088923B /* PBXTargetDependency */,
 			);
 			name = dipgen;
 			productName = dipgen;
-			productReference = 649CABEF1D7ED9E700AA3C44 /* dipgen */;
-			productType = "com.apple.product-type.tool";
+			productReference = 0980D96A1DA107AE0088923B /* dipgen.app */;
+			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
@@ -316,8 +347,9 @@
 						CreatedOnToolsVersion = 8.0;
 						ProvisioningStyle = Automatic;
 					};
-					649CABEE1D7ED9E700AA3C44 = {
-						CreatedOnToolsVersion = 7.3.1;
+					0980D9691DA107AE0088923B = {
+						CreatedOnToolsVersion = 8.0;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -327,6 +359,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = 649CABE61D7ED9E700AA3C44;
 			productRefGroup = 649CABF01D7ED9E700AA3C44 /* Products */;
@@ -339,7 +372,7 @@
 			);
 			projectRoot = "";
 			targets = (
-				649CABEE1D7ED9E700AA3C44 /* dipgen */,
+				0980D9691DA107AE0088923B /* dipgen */,
 				0929935F1D9FE5C300DA3EB7 /* DipGenFramework */,
 				092993671D9FE5C400DA3EB7 /* DipGenFrameworkTests */,
 			);
@@ -374,19 +407,35 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0980D9561DA0271A0088923B /* Copy Test Project */ = {
+		0980D9871DA109320088923B /* Extract CLI Tool */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(EXECUTABLE_PATH)",
+			);
+			name = "Extract CLI Tool";
+			outputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(EXECUTABLE_NAME)",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = ". script/extract-tool";
+		};
+		0980D98F1DA109CE0088923B /* Embed Swift libraries into DipGenFramework.framework */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Test Project";
+			name = "Embed Swift libraries into DipGenFramework.framework";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "echo \"$BUILT_PRODUCTS_DIR\"\necho \"$DEVELOPER_DIR\"\necho \"$SDKROOT\"\necho \"$SOURCE_ROOT\"\n\ncp -r \"$SRCROOT/DipGenFrameworkTests/Sources/DipGenTest\" \"$BUILT_PRODUCTS_DIR\"";
+			shellScript = "cd \"$TARGET_BUILD_DIR\"\nFRAMEWORK_BUNDLE=\"$FRAMEWORKS_FOLDER_PATH/DipGenFramework.framework\"\n\nxcrun swift-stdlib-tool --copy --verbose --Xcodesign --timestamp=none \\\n--scan-executable \"$EXECUTABLE_PATH\" \\\n--scan-folder \"$FRAMEWORKS_FOLDER_PATH\" \\\n--platform macosx --destination \"$FRAMEWORK_BUNDLE/Versions/Current/Frameworks\" \\\n--strip-bitcode\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -410,13 +459,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		649CABEB1D7ED9E700AA3C44 /* Sources */ = {
+		0980D9661DA107AE0088923B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				649CABF31D7ED9E700AA3C44 /* main.swift in Sources */,
-				0980D9611DA0399C0088923B /* XCProjectFileExtensions.swift in Sources */,
-				0980D95D1DA039710088923B /* Environment.swift in Sources */,
+				0980D9801DA108AC0088923B /* XCProjectFileExtensions.swift in Sources */,
+				0980D97F1DA108AC0088923B /* Environment.swift in Sources */,
+				0980D9811DA108AC0088923B /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -428,10 +477,10 @@
 			target = 0929935F1D9FE5C300DA3EB7 /* DipGenFramework */;
 			targetProxy = 0929936A1D9FE5C400DA3EB7 /* PBXContainerItemProxy */;
 		};
-		0980D9301DA008150088923B /* PBXTargetDependency */ = {
+		0980D97E1DA1089F0088923B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 0929935F1D9FE5C300DA3EB7 /* DipGenFramework */;
-			targetProxy = 0980D92F1DA008150088923B /* PBXContainerItemProxy */;
+			targetProxy = 0980D97D1DA1089F0088923B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -525,6 +574,41 @@
 			};
 			name = Release;
 		};
+		0980D9751DA107AE0088923B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
+				INFOPLIST_FILE = "dipgen/Supporting Files/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks/DipGenFramework.framework/Versions/Current/Frameworks @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = me.puchka.dipgen;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+			};
+			name = Debug;
+		};
+		0980D9761DA107AE0088923B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
+				INFOPLIST_FILE = "dipgen/Supporting Files/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks/DipGenFramework.framework/Versions/Current/Frameworks @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = me.puchka.dipgen;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		649CABF41D7ED9E700AA3C44 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -614,36 +698,6 @@
 			};
 			name = Release;
 		};
-		649CABF71D7ED9E700AA3C44 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SRCROOT)/Carthage/Build/Mac",
-					"$(PROJECT_DIR)/Carthage/Build/Mac",
-				);
-				LD_RUNPATH_SEARCH_PATHS = "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx @executable_path";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_FORCE_DYNAMIC_LINK_STDLIB = YES;
-				SWIFT_FORCE_STATIC_LINK_STDLIB = NO;
-			};
-			name = Debug;
-		};
-		649CABF81D7ED9E700AA3C44 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SRCROOT)/Carthage/Build/Mac",
-					"$(PROJECT_DIR)/Carthage/Build/Mac",
-				);
-				LD_RUNPATH_SEARCH_PATHS = "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx @executable_path";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_FORCE_DYNAMIC_LINK_STDLIB = YES;
-				SWIFT_FORCE_STATIC_LINK_STDLIB = NO;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -665,20 +719,20 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		0980D9741DA107AE0088923B /* Build configuration list for PBXNativeTarget "dipgen" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0980D9751DA107AE0088923B /* Debug */,
+				0980D9761DA107AE0088923B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		649CABEA1D7ED9E700AA3C44 /* Build configuration list for PBXProject "dipgen" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				649CABF41D7ED9E700AA3C44 /* Debug */,
 				649CABF51D7ED9E700AA3C44 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		649CABF61D7ED9E700AA3C44 /* Build configuration list for PBXNativeTarget "dipgen" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				649CABF71D7ED9E700AA3C44 /* Debug */,
-				649CABF81D7ED9E700AA3C44 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

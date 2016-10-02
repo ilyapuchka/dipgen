@@ -14,8 +14,8 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "649CABEE1D7ED9E700AA3C44"
-               BuildableName = "dipgen"
+               BlueprintIdentifier = "0980D9691DA107AE0088923B"
+               BuildableName = "dipgen.app"
                BlueprintName = "dipgen"
                ReferencedContainer = "container:dipgen.xcodeproj">
             </BuildableReference>
@@ -32,8 +32,8 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "649CABEE1D7ED9E700AA3C44"
-            BuildableName = "dipgen"
+            BlueprintIdentifier = "0980D9691DA107AE0088923B"
+            BuildableName = "dipgen.app"
             BlueprintName = "dipgen"
             ReferencedContainer = "container:dipgen.xcodeproj">
          </BuildableReference>
@@ -55,8 +55,8 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "649CABEE1D7ED9E700AA3C44"
-            BuildableName = "dipgen"
+            BlueprintIdentifier = "0980D9691DA107AE0088923B"
+            BuildableName = "dipgen.app"
             BlueprintName = "dipgen"
             ReferencedContainer = "container:dipgen.xcodeproj">
          </BuildableReference>
@@ -106,8 +106,8 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "649CABEE1D7ED9E700AA3C44"
-            BuildableName = "dipgen"
+            BlueprintIdentifier = "0980D9691DA107AE0088923B"
+            BuildableName = "dipgen.app"
             BlueprintName = "dipgen"
             ReferencedContainer = "container:dipgen.xcodeproj">
          </BuildableReference>
