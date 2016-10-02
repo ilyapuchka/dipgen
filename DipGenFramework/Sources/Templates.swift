@@ -19,8 +19,14 @@ public indirect enum Template {
     case storyboardInstantiatable(type: String)
     case uiContainer()
     
+    case configureAll(containers: [String])
+    case configureContainer(name: String)
+    case bootstrapAll(containers: [String])
+    case bootstrapContainer(name: String)
+    case containerExtension([Template])
+    
     enum Format: String {
-        case container              = "public let %@ = DependencyContainer { container in \n\tunowned let container = container\n%@\n%@}\n"
+        case container              = "let %@ = DependencyContainer { container in \n\tunowned let container = container\n%@\n%@}\n"
         case uiContainer            = "DependencyContainer.uiContainers.append(container)\n"
         case registration           = "%@container.register(.%@, %@%@factory: %@)\n"
         case implements             = ".implements(%@)\n"
@@ -28,6 +34,11 @@ public indirect enum Template {
         case resolveProperty        = "resolved.%@ = try container.resolve(%@)%@\n"
         case factory                = "%@.%@"
         case storyboardInstantiatable   = "extension %@: StoryboardInstantiatable {}\n"
+        case configureAll           = "static func configureAll() {\n%@}\n"
+        case configureContainer     = "let _ = %@\n"
+        case bootstrapAll           = "static func bootstrapAll() throws {\n%@}\n"
+        case bootstrapContainer     = "try %@.bootstrap()\n"
+        case containerExtension     = "extension DependencyContainer {\n\n%@\n}\n"
     }
     
     func description(indent: Int = 0) -> String {
@@ -61,7 +72,7 @@ public indirect enum Template {
             
         case let .resolvingProperties(properties):
             guard !properties.isEmpty else { return "" }
-            let properties = properties.map({ Template.resolveProperty(name: $0.0, tag: $0.1, injectAs: $0.2) })
+            let properties = properties.map(Template.resolveProperty)
             return String(.resolvingProperties, String(properties, indent: indent + 1), indent: indent)
             
         case let .resolveProperty(name, tag, injectAs):
@@ -75,6 +86,21 @@ public indirect enum Template {
             
         case let .storyboardInstantiatable(type):
             return String(.storyboardInstantiatable, type)
+        
+        case let configureAll(containers):
+            let containers = containers.map(Template.configureContainer)
+            return String(.configureAll, String(containers, indent: indent + 1), indent: indent)
+        case let configureContainer(name):
+            return String(.configureContainer, name, indent: indent)
+        
+        case let bootstrapAll(containers):
+            let containers = containers.map(Template.bootstrapContainer)
+            return String(.bootstrapAll, String(containers, indent: indent + 1), indent: indent)
+        case let bootstrapContainer(name):
+            return String(.bootstrapContainer, name, indent: indent)
+            
+        case let containerExtension(extensions):
+            return String(.containerExtension, String(extensions, separator: "\n", indent: indent + 1))
         }
     }
     
