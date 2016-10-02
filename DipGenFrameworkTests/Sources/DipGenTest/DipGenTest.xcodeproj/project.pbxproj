@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		0980D94F1DA026BB0088923B /* DipGenTest.h in Headers */ = {isa = PBXBuildFile; fileRef = 0980D94D1DA026BB0088923B /* DipGenTest.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0980D9531DA026C00088923B /* input.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0980D9421DA026720088923B /* input.swift */; };
+		0980D9931DA1144E0088923B /* CompositionRoot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0980D9921DA1144E0088923B /* CompositionRoot.swift */; };
+		0980D9991DA1153A0088923B /* Dip.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0980D9971DA1153A0088923B /* Dip.framework */; };
+		0980D99A1DA1153A0088923B /* DipUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0980D9981DA1153A0088923B /* DipUI.framework */; };
+		0980D99C1DA118E50088923B /* Dip.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0980D99B1DA118E50088923B /* Dip.generated.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -16,6 +20,10 @@
 		0980D94A1DA026BB0088923B /* DipGenTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DipGenTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0980D94D1DA026BB0088923B /* DipGenTest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DipGenTest.h; sourceTree = "<group>"; };
 		0980D94E1DA026BB0088923B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0980D9921DA1144E0088923B /* CompositionRoot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompositionRoot.swift; sourceTree = "<group>"; };
+		0980D9971DA1153A0088923B /* Dip.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Dip.framework; path = Carthage/Build/iOS/Dip.framework; sourceTree = "<group>"; };
+		0980D9981DA1153A0088923B /* DipUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DipUI.framework; path = Carthage/Build/iOS/DipUI.framework; sourceTree = "<group>"; };
+		0980D99B1DA118E50088923B /* Dip.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Dip.generated.swift; path = DipGenTest/Dip.generated.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -23,6 +31,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0980D9991DA1153A0088923B /* Dip.framework in Frameworks */,
+				0980D99A1DA1153A0088923B /* DipUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -34,6 +44,7 @@
 			children = (
 				0980D94C1DA026BB0088923B /* DipGenTest */,
 				0980D94B1DA026BB0088923B /* Products */,
+				0980D9961DA115390088923B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -48,11 +59,22 @@
 		0980D94C1DA026BB0088923B /* DipGenTest */ = {
 			isa = PBXGroup;
 			children = (
+				0980D99B1DA118E50088923B /* Dip.generated.swift */,
 				0980D9421DA026720088923B /* input.swift */,
+				0980D9921DA1144E0088923B /* CompositionRoot.swift */,
 				0980D94D1DA026BB0088923B /* DipGenTest.h */,
 				0980D94E1DA026BB0088923B /* Info.plist */,
 			);
 			path = DipGenTest;
+			sourceTree = "<group>";
+		};
+		0980D9961DA115390088923B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0980D9971DA1153A0088923B /* Dip.framework */,
+				0980D9981DA1153A0088923B /* DipUI.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -73,6 +95,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0980D9501DA026BB0088923B /* Build configuration list for PBXNativeTarget "DipGenTest" */;
 			buildPhases = (
+				0980D9911DA113990088923B /* ShellScript */,
 				0980D9451DA026BB0088923B /* Sources */,
 				0980D9461DA026BB0088923B /* Frameworks */,
 				0980D9471DA026BB0088923B /* Headers */,
@@ -128,12 +151,30 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		0980D9911DA113990088923B /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "dipgen -o \"$SRCROOT/$PRODUCT_NAME\"";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		0980D9451DA026BB0088923B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0980D9931DA1144E0088923B /* CompositionRoot.swift in Sources */,
 				0980D9531DA026C00088923B /* input.swift in Sources */,
+				0980D99C1DA118E50088923B /* Dip.generated.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -184,6 +225,10 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -249,6 +294,10 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;

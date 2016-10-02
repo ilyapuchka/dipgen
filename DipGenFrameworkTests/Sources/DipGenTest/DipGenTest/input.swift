@@ -13,34 +13,26 @@ class ListPresenter {}
 class ListViewController: UIViewController {}
 
 /**
- @dip.register
- */
-extension NSObject: SomeProtocol {}
-
-/**
  Some Real docs
  */
 /**
- @dip.register SomeProtocol
+ @dip.register ListWireframe
  @dip.name listWireframe
  @dip.scope Unique
  @dip.container listModule
  @dip.tag some tag
  @dip.implements NSObject, SomeProtocol
  */
-class ListWireframe: NSObject, SomeProtocol {
+class ListWireframe: NSObject {
     
     /**
-     @dip.inject SomeProtocol
+     @dip.inject AddWireframe
      @dip.tag tag
      */
-    let addWireframe: AddWireframe
+    var addWireframe: AddWireframe
     /**@dip.inject*/
-    let listPresenter: ListPresenter?
-    /**@dip.inject*/let rootWireframe: RootWireframe
-    
-//    private let _listViewController = InjectedWeak<ListViewController>(tag: ListViewControllerIdentifier)
-//    var listViewController : ListViewController? { return _listViewController.value }
+    var listPresenter: ListPresenter?
+    /**@dip.inject*/var rootWireframe: RootWireframe
     
     init(rootWireframe: RootWireframe, addWireframe: AddWireframe) {
         self.rootWireframe = rootWireframe
