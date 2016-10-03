@@ -16,7 +16,7 @@ class ListViewController: UIViewController {}
  Some Real docs
  */
 /**
- @dip.register ListWireframe
+ @dip.register SomeProtocol
  @dip.name listWireframe
  @dip.scope Unique
  @dip.container listModule
