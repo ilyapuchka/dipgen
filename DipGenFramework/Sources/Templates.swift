@@ -30,7 +30,7 @@ public indirect enum Template {
         case uiContainer            = "DependencyContainer.uiContainers.append(container)\n"
         case registration           = "%@container.register(.%@, %@%@factory: %@)\n"
         case implements             = ".implements(%@)\n"
-        case resolvingProperties    = ".resolvingProperties { container, resolved in \n%@}\n"
+        case resolvingProperties    = ".resolvingProperties { container, resolved in \n%@%@}\n"
         case resolveProperty        = "resolved.%@ = try container.resolve(%@)%@\n"
         case factory                = "%@.%@"
         case storyboardInstantiatable   = "extension %@: StoryboardInstantiatable {}\n"
@@ -39,6 +39,7 @@ public indirect enum Template {
         case bootstrapAll           = "static func bootstrapAll() throws {\n%@}\n"
         case bootstrapContainer     = "try %@.bootstrap()\n"
         case containerExtension     = "extension DependencyContainer {\n\n%@\n}\n"
+        case resolvedCast           = "let resolved = resolved as! %@\n\n"
     }
     
     func description(indent: Int = 0) -> String {
@@ -52,7 +53,7 @@ public indirect enum Template {
             
         case let .registration(name, scope, registerAs, tag, factory, implements, resolvingProperties, _):
             let implements = Template.implements(types: implements)
-            let resolvingProperties = Template.resolvingProperties(properties: resolvingProperties)
+            let resolvingProperties = Template.resolvingProperties(type: factory.type, registeredAs: registerAs ?? factory.type, properties: resolvingProperties)
             let factory = Template.factory(type: factory.type, constructor: factory.constructor)
             
             return String(.registration,
@@ -70,10 +71,11 @@ public indirect enum Template {
             let types = types.map({ "\($0).self" }).joinWithSeparator(", ")
             return String(.implements, types, indent: indent)
             
-        case let .resolvingProperties(properties):
+        case let .resolvingProperties(type, registeredAs, properties):
             guard !properties.isEmpty else { return "" }
             let properties = properties.map(Template.resolveProperty)
-            return String(.resolvingProperties, String(properties, indent: indent + 1), indent: indent)
+            let resolvedCast = type != registeredAs ? String(.resolvedCast, type, indent: indent + 1) : ""
+            return String(.resolvingProperties, resolvedCast, String(properties, indent: indent + 1), indent: indent)
             
         case let .resolveProperty(name, tag, injectAs):
             return String(.resolveProperty, name,
