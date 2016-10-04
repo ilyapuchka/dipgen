@@ -227,7 +227,10 @@ public class FileProcessor {
     func process(methods declarations: [SourceKitRepresentable]) -> MethodProcessingResult? {
         var constructors: [MethodProcessingResult] = []
         for declaration in declarations {
-            guard declaration.kind == .FunctionMethodInstance else { continue }
+            guard
+                declaration.kind == .FunctionMethodInstance ||
+                    declaration.kind == .FunctionMethodStatic ||
+                    declaration.kind == .FunctionMethodClass else { continue }
             let declaration = declaration as! SourceKitDeclaration
             
             if let method = process(method: declaration) {
@@ -251,7 +254,10 @@ public class FileProcessor {
      */
     func process(method declaration: SourceKitDeclaration) -> MethodProcessingResult? {
         let name = declaration[Structure.Key.name] as! String
-        if name.hasPrefix("init") {
+        if (declaration.kind == .FunctionMethodInstance && name.hasPrefix("init")) ||
+            declaration.kind == .FunctionMethodStatic || declaration.kind == .FunctionMethodClass,
+            let docs = docs(declaration)
+        {
             var designated = false
             var methodArguments = [String]()
             for line in docs.lines() {
