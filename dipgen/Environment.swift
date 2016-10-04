@@ -27,14 +27,25 @@ struct Environment {
     let sdkRoot: String
     let sourceRoot: String
     let targetName: String
+    let outputPath: String
+    let swiftVersion: String
+    let dipVersion: String
+    let dipUIVersion: String
     
-    init(environment: [String: String]) throws {
-        projectFilePath    = try get("PROJECT_FILE_PATH", environment)
-        buildProductsDir   = try get("BUILT_PRODUCTS_DIR", environment)
-        developerDir       = try get("DEVELOPER_DIR", environment)
-        sdkRoot            = try get("SDKROOT", environment)
-        sourceRoot         = try get("SOURCE_ROOT", environment)
-        targetName         = try get("TARGET_NAME", environment)
+    init(processInfo: NSProcessInfo) throws {
+        let arguments = processInfo.arguments
+        outputPath = get(arguments, name: "-o", fullName: "--output", defaultValue: "")
+        swiftVersion = get(arguments, name: "-s", fullName: "--swift-version", defaultValue: "3.0")
+        dipVersion = get(arguments, name: "-dip", fullName: "--dip-version", defaultValue: "5.0")
+        dipUIVersion = get(arguments, name: "-dipui", fullName: "--dipui-version", defaultValue: "1.0")
+        
+        let environment = processInfo.environment
+        projectFilePath    = try get(environment, "PROJECT_FILE_PATH")
+        buildProductsDir   = try get(environment, "BUILT_PRODUCTS_DIR")
+        developerDir       = try get(environment, "DEVELOPER_DIR")
+        sdkRoot            = try get(environment, "SDKROOT")
+        sourceRoot         = try get(environment, "SOURCE_ROOT")
+        targetName         = try get(environment, "TARGET_NAME")
     }
     
     func url(forSourceTreeFolder sourceTreeFolder: SourceTreeFolder) -> NSURL {
@@ -54,8 +65,17 @@ struct Environment {
     
 }
 
-private func get(name: String, _ environment: [String: String]) throws -> String {
+private func get(environment: [String: String], _ name: String) throws -> String {
     guard let value = environment[name] else { throw Environment.Error.missing(name) }
     return value
+}
+
+private func get(arguments: [String], name: String, fullName: String, defaultValue: String) -> String {
+    if let outputArgumentIndex = arguments.indexOf(name) ?? arguments.indexOf(fullName) {
+        return arguments[outputArgumentIndex.successor()]
+    }
+    else {
+        return defaultValue
+    }
 }
 
