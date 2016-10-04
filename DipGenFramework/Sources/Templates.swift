@@ -12,11 +12,10 @@ public indirect enum Template {
     
     case content(imports: [String], containers: [String: [Template]])
     case container(name: String, registrations: [Template], uiContainer: Bool)
-    case registration(name: String?, scope: String, registerAs: String?, tag: String?, factory: (type: String, constructor: String), implements: [String], resolvingProperties: [PropertyProcessingResult], storyboardInstantiatable: Bool)
+    case registration(name: String?, scope: String, registerAs: String?, tag: String?, factory: (type: String, constructor: String, arguments: [String]), implements: [String], resolvingProperties: [PropertyProcessingResult], storyboardInstantiatable: Bool)
     case implements(types: [String])
     case resolvingProperties(type: String, registeredAs: String, properties: [(name: String, tag: String?, injectAs: String?)])
     case resolveProperty(name: String, tag: String?, injectAs: String?)
-    case factory(type: String, constructor: String)
     
     enum Format: String {
         case container              = "let %@ = DependencyContainer { container in \n\tunowned let container = container\n%@\n%@}\n"
@@ -26,6 +25,7 @@ public indirect enum Template {
         case resolvingProperties    = ".resolvingProperties { container, resolved in \n%@%@}\n"
         case resolveProperty        = "resolved.%@ = try container.resolve(%@)%@\n"
         case factory                = "%@.%@"
+        case argumentsFactory       = "{ %@ in %@ }"
         case storyboardInstantiatable   = "extension %@: StoryboardInstantiatable {}\n"
         case configureAll           = "static func configureAll() {\n%@}\n"
         case configureContainer     = "let _ = %@\n"
@@ -43,7 +43,7 @@ public indirect enum Template {
             var uiContainers: [String] = []
             for (container, registrations) in containers {
                 for registration in registrations {
-                    guard case let .registration(_, _, _, _, (type, _), _, _, storyboardInstantiatable) = registration else { continue }
+                    guard case let .registration(_, _, _, _, (type, _, _), _, _, storyboardInstantiatable) = registration else { continue }
                     if storyboardInstantiatable {
                         storyboardInstantiatables.append(type)
                         uiContainers.append(container)
@@ -86,14 +86,24 @@ public indirect enum Template {
         case let .registration(name, scope, registerAs, tag, factory, implements, resolvingProperties, _):
             let implements = Template.implements(types: implements)
             let resolvingProperties = Template.resolvingProperties(type: factory.type, registeredAs: registerAs ?? factory.type, properties: resolvingProperties)
-            let factory = Template.factory(type: factory.type, constructor: factory.constructor)
+            let factoryString: String
+            if factory.arguments.isEmpty {
+                factoryString = String(.factory, factory.type, factory.constructor)
+            }
+            else {
+                factoryString = String(
+                    .argumentsFactory,
+                    "(\(factory.arguments.joinWithSeparator(", ")))",
+                    constructor(factory.constructor, type: factory.type, insertingArguments: factory.arguments)
+                )
+            }
             
             return String(.registration,
                 (name != nil ? "let \(name!) = " : ""),
                 scope,
                 (registerAs != nil ? "type: \(registerAs!).self, " : ""),
                 (tag != nil ? "tag: \"\(tag!)\", " : ""),
-                factory.description(),
+                factoryString,
                 indent: indent)
                 .appending(implements, indent: indent + 1)
                 .appending(resolvingProperties, indent: indent + 1)
@@ -114,12 +124,32 @@ public indirect enum Template {
                 (tag != nil ? "tag: \"\(tag!)\"" : ""),
                 (injectAs != nil ? " as \(injectAs!)" : ""),
                 indent: indent)
-            
-        case let factory(type, constructor):
-            return String(.factory, type, constructor)
         }
     }
     
+    func constructor(constructor: String, type: String, insertingArguments: [String]) -> String {
+        guard let argumentsStart = constructor.rangeOfString("(")?.startIndex else { return constructor }
+        guard let argumentsEnd = constructor.rangeOfString(")")?.startIndex else { return constructor }
+        guard argumentsStart.successor() < argumentsEnd else { return constructor }
+        let constructorArgumentsString = constructor.substringWithRange(argumentsStart.successor()..<argumentsEnd)
+        let constructorName = constructor.substringToIndex(argumentsStart)
+        let constructorArguments = constructorArgumentsString.componentsSeparatedByString(":")
+        var insertingArguments = insertingArguments
+        var constructorArgumentsPairs = [String]()
+        var addTry = false
+        for argument in constructorArguments {
+            guard !argument.isEmpty else { break }
+            if let index = insertingArguments.indexOf(argument) {
+                insertingArguments.removeAtIndex(index)
+                constructorArgumentsPairs.append("\(argument): \(argument)")
+            }
+            else {
+                addTry = true
+                constructorArgumentsPairs.append("\(argument): container.resolve()")
+            }
+        }
+        return "\(addTry ? "try " : "")\(type).\(constructorName)(\(constructorArgumentsPairs.joinWithSeparator(", ")))"
+    }
 }
 
 extension String {

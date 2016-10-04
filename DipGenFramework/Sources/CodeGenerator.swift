@@ -23,7 +23,7 @@ public func +(lhs: FileProcessingResult, rhs: FileProcessingResult) -> FileProce
 }
 
 public typealias PropertyProcessingResult = (name: String, tag: String?, injectAs: String?)
-typealias MethodProcessingResult = (name: String, designated: Bool)
+typealias MethodProcessingResult = (name: String, designated: Bool, arguments: [String])
 
 extension String {
     
@@ -110,6 +110,7 @@ public class FileProcessor {
         var definitionName: String?
         var registerAs: String?
         var constructorToRegister: String?
+        var constructorArguments: [String]?
         var tagToRegister: String?
         var scopeToRegister = "Shared"
         var implementsToRegister = [String]()
@@ -122,6 +123,11 @@ public class FileProcessor {
                 line.contains(dipAnnotation: .scope, modifier: { scopeToRegister = $0 ?? scopeToRegister }) ||
                 line.contains(dipAnnotation: .name, modifier: { definitionName = $0 ?? definitionName }) ||
                 line.contains(dipAnnotation: .constructor, modifier: { constructorToRegister = $0 }) ||
+                line.contains(dipAnnotation: .arguments, modifier: { arguments in
+                    constructorArguments = arguments?
+                        .componentsSeparatedByString(",")
+                        .map({ $0.trimmed(.whitespaceCharacterSet()) }) ?? []
+                }) ||
                 line.contains(dipAnnotation: .tag, modifier: { tag in
                     tagToRegister = tag?.trimmed("\"")
                     if tagToRegister?.isEmpty == true {
@@ -151,6 +157,9 @@ public class FileProcessor {
             if constructor?.designated == true {
                 shouldRegister = shouldRegister || constructor != nil
             }
+            if constructorArguments == nil {
+                constructorArguments = constructor?.arguments
+            }
         }
         else {
             propertiesToResolve = []
@@ -163,7 +172,7 @@ public class FileProcessor {
                 scope: scopeToRegister,
                 registerAs: registerAs,
                 tag: tagToRegister,
-                factory: (type, constructor),
+                factory: (type, constructor, constructorArguments ?? []),
                 implements: implementsToRegister,
                 resolvingProperties: propertiesToResolve,
                 storyboardInstantiatable: storyboardInstantiatable
@@ -216,22 +225,22 @@ public class FileProcessor {
         * if declaration contains several constructors and none of them is marked with `@dip.designated` returns `nil`.
      */
     func process(methods declarations: [SourceKitRepresentable]) -> MethodProcessingResult? {
-        var constructors: [String] = []
+        var constructors: [MethodProcessingResult] = []
         for declaration in declarations {
             guard declaration.kind == .FunctionMethodInstance else { continue }
             let declaration = declaration as! SourceKitDeclaration
             
-            if let (name, designated) = process(method: declaration) {
-                if designated {
-                    return (name, true)
+            if let method = process(method: declaration) {
+                if method.designated {
+                    return method
                 }
                 else {
-                    constructors.append(name)
+                    constructors.append(method)
                 }
             }
         }
         
-        return constructors.count > 1 ? nil : constructors.first.map({ ($0, false ) })
+        return constructors.count > 1 ? nil : constructors.first
     }
     
     /**
@@ -243,8 +252,17 @@ public class FileProcessor {
     func process(method declaration: SourceKitDeclaration) -> MethodProcessingResult? {
         let name = declaration[Structure.Key.name] as! String
         if name.hasPrefix("init") {
-            let designated = docs(declaration).map({ $0.contains(annotation: .designated )}) == true
-            return (name, designated)
+            var designated = false
+            var methodArguments = [String]()
+            for line in docs.lines() {
+                designated = line.contains(dipAnnotation: .designated)
+                line.contains(dipAnnotation: .arguments, modifier: { arguments in
+                    methodArguments = arguments?
+                        .componentsSeparatedByString(",")
+                        .map({ $0.trimmed(.whitespaceCharacterSet()) }) ?? []
+                })
+            }
+            return (name, designated, methodArguments)
         }
         return nil
     }
