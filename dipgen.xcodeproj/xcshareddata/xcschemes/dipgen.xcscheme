@@ -63,7 +63,7 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "--output DipGenTest/DipGenTest"
+            argument = "--output ."
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>

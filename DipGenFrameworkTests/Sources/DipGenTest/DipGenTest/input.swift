@@ -9,6 +9,8 @@ class ListPresenter {}
  @dip.storyboardInstantiatable
  
  @dip.constructor init(nibName:bundle:)
+ @dip.arguments nibName
+ @dip.factory BaseFactory
  */
 class ListViewController: UIViewController {}
 

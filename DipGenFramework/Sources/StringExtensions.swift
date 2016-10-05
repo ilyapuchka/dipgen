@@ -30,4 +30,8 @@ extension String {
         return stringByTrimmingCharactersInSet(charactersSet)
     }
 
+    var camelCased: String {
+        return String(characters.prefix(1)).lowercaseString + String(characters.dropFirst())
+    }
+
 }

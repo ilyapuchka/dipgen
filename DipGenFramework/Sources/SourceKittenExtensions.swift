@@ -31,7 +31,7 @@ extension Structure {
 
 extension File {
     
-    var imports: [String] {
+    public func imports() -> [String] {
         return contents.lines().flatMap({ $0.importModule })
     }
     

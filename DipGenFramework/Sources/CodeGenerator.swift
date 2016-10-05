@@ -9,34 +9,21 @@
 import Foundation
 import SourceKittenFramework
 
-///Dictionary of registrations grouped by then names of containers.
-public typealias FileProcessingResult = [String: [Template]]
-
 ///Merges two processing results into one
-public func +(lhs: FileProcessingResult, rhs: FileProcessingResult) -> FileProcessingResult {
+public func +(lhs: [String: Container], rhs: [String: [Registration]]) -> [String: Container] {
     var lhs = lhs
     for (containerName, registrations) in rhs {
-        lhs[containerName] = lhs[containerName] ?? []
-        lhs[containerName]?.appendContentsOf(registrations)
+        var container = lhs[containerName] ?? Container(name: containerName, isUIContainer: false, registrations: [])
+        if !container.isUIContainer {
+            container.isUIContainer = !registrations.filter({ $0.storyboardInstantiatable }).isEmpty
+        }
+        container.registrations.appendContentsOf(registrations)
+        lhs[containerName] = container
     }
     return lhs
 }
 
-public typealias PropertyProcessingResult = (name: String, tag: String?, injectAs: String?)
 typealias MethodProcessingResult = (name: String, designated: Bool, arguments: [String])
-
-extension String {
-    
-    /**
-     Creates a string to write into file from processing result.
-     
-     - parameter containers: Result of files processing
-     */
-    public init(containers: FileProcessingResult, files: [File]) {
-        self = Template.content(imports: files.flatMap({ $0.imports }), containers: containers).description()
-    }
-    
-}
 
 public class FileProcessor {
     
@@ -73,11 +60,11 @@ public class FileProcessor {
      
      - returns: Processing result
      */
-    public func process() throws -> FileProcessingResult {
+    public func process() throws -> [String: [Registration]] {
         guard let substructure = structure.substructure else {
             throw Error.failedToParse(file.path!)
         }
-        var containers: FileProcessingResult = [:]
+        var containers: [String: [Registration]] = [:]
         lastProcessedDocRange = 0..<1
         
         for declaration in substructure {
@@ -102,7 +89,7 @@ public class FileProcessor {
      - returns: A template for class registration and the name of container to register it in
      or `nil` if class should not be registered.
      */
-    func process(class declaration: SourceKitDeclaration) -> (String, Template)? {
+    func process(class declaration: SourceKitDeclaration) -> (String, Registration)? {
         guard let classDocs = docs(declaration) else { return nil }
         
         let type = declaration[Structure.Key.name] as! String
@@ -147,7 +134,7 @@ public class FileProcessor {
             }
         }
         
-        let propertiesToResolve: [PropertyProcessingResult]
+        let propertiesToResolve: [ResolvingProperty]
         let constructor: MethodProcessingResult?
         if let substructure = declaration[Structure.Key.substructure] as? [SourceKitRepresentable] {
             propertiesToResolve = process(properties: substructure)
@@ -167,17 +154,10 @@ public class FileProcessor {
         }
         
         if shouldRegister, let constructor = constructor?.name ?? constructorToRegister  {
-            let registration = Template.registration(
-                name: definitionName,
-                scope: scopeToRegister,
-                registerAs: registerAs,
-                tag: tagToRegister,
-                factory: (type, constructor, constructorArguments ?? []),
-                implements: implementsToRegister,
-                resolvingProperties: propertiesToResolve,
-                storyboardInstantiatable: storyboardInstantiatable
-            )
-            return (containerName, registration)
+            let closure = constructorArguments.map({ Closure(arguments: $0, constructor: constructor, type: type) })
+            let arguments = constructorArguments?.map({ Argument(name: $0, type: "")})
+            let factory = Factory(type: type, arguments: arguments ?? [], constructor: constructor, closure: closure)
+            return (containerName, Registration(name: definitionName ?? type.camelCased, scope: scopeToRegister, registerAs: registerAs, tag: tagToRegister, factory: factory, implements: implementsToRegister, resolvingProperties: propertiesToResolve, storyboardInstantiatable: storyboardInstantiatable))
         }
         
         return nil
@@ -190,7 +170,7 @@ public class FileProcessor {
      - properties: class declaration substructure containing properties declarations
      - docs: Closure to generate documentation from declaration
      */
-    func process(properties declarations: [SourceKitRepresentable]) -> [PropertyProcessingResult] {
+    func process(properties declarations: [SourceKitRepresentable]) -> [ResolvingProperty] {
         return declarations
             .filter({ $0.kind == .VarInstance })
             .map({ $0 as! SourceKitDeclaration })
@@ -202,7 +182,7 @@ public class FileProcessor {
      
      - returns: A template for resolving the property if it is annotated with `"@dip.inject"` or `nil` otherwise.
      */
-    func process(property declaration: SourceKitDeclaration) -> PropertyProcessingResult? {
+    func process(property declaration: SourceKitDeclaration) -> ResolvingProperty? {
         guard let propertyDocs = docs(declaration) else { return nil }
         
         let name = declaration[Structure.Key.name] as! String
@@ -213,7 +193,7 @@ public class FileProcessor {
             line.contains(dipAnnotation: .inject, modifier: { injectAs = $0 })
             line.contains(dipAnnotation: .tag, modifier: { tagToInject = $0 })
         }
-        return (name, tagToInject, injectAs)
+        return ResolvingProperty(name: name, resolveAs: injectAs, tag: tagToInject)
     }
     
     /**

@@ -13,8 +13,10 @@ do {
     let processingResult = try files
         .map(FileProcessor.init(file:))
         .map({ try $0.process() })
-        .reduce(FileProcessingResult(), combine: +)
-    let content = String(containers: processingResult, files: files)
+        .reduce([String: Container](), combine: +)
+        .map({ $0.1 })
+    let imports = Set(files.flatMap({ $0.imports() }))
+    let content = try renderDipTemplate(processingResult, imports: imports)
     let outoutURL = NSURL(fileURLWithPath: outputFileName, relativeToURL: NSURL(fileURLWithPath: environment.outputPath))
     try content.writeToURL(outoutURL, atomically: true, encoding: NSUTF8StringEncoding)
 } catch {
