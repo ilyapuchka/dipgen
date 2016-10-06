@@ -11,6 +11,7 @@ import Foundation
 /**
  @dip.register
  @dip.constructor init
+ @dip.name nsObject
  */
 extension NSObject: SomeProtocol {}
 

@@ -11,19 +11,18 @@ import Foundation
 enum DipAnnotation: String, CustomStringConvertible {
     ///Marks component to be registered in container. Can have optional type to register.
     case register
-    ///Container to register component in. By default will register in "baseContainer".
-    case container
+    ///Factory and container name to register component in.
+    ///For example using name "root" will generate "rootContainer" and "RootFactory".
+    ///By default will register in "base" container.
+    case factory
     ///Marks constructor as designated. It will be used by component's definition as a factory.
     ///Required if type has more than one constructor.
     ///Will be ignored if type is already annotated with @dip.constructor.
     case designated
     ///Constructor to use as factory.
-    ///Will ignore @dip.designated annotation.
     case constructor
-    ///List of factory runtime arguments. Should match external names of arguments. 
-    ///Not listed arguments will be resolved by container.
-    ///Can be used on a class/extension or on method declaration.
-    ///Method annotation will be ignored if class/extension is annotated already.
+    ///List of runtime arguments for registration. Should match external names of arguments.
+    ///Can be used only on method declaration (constructors or sattic/class methods).
     case arguments
     ///Name of registration.
     case name

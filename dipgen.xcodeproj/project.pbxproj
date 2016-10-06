@@ -13,7 +13,7 @@
 		0929937C1D9FE66600DA3EB7 /* Annotations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0929937B1D9FE66600DA3EB7 /* Annotations.swift */; };
 		0929937E1D9FE6F800DA3EB7 /* SourceKittenExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0929937D1D9FE6F800DA3EB7 /* SourceKittenExtensions.swift */; };
 		092993801D9FE72F00DA3EB7 /* CodeGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0929937F1D9FE72F00DA3EB7 /* CodeGenerator.swift */; };
-		0958B9461DA5997D008C4C37 /* Dip.generated.stencil in Resources */ = {isa = PBXBuildFile; fileRef = 0958B9451DA5997D008C4C37 /* Dip.generated.stencil */; };
+		0958B9461DA5997D008C4C37 /* Dip.container.stencil in Resources */ = {isa = PBXBuildFile; fileRef = 0958B9451DA5997D008C4C37 /* Dip.container.stencil */; };
 		0958B9851DA5A29D008C4C37 /* PathKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0958B9841DA5A29D008C4C37 /* PathKit.swift */; };
 		0958B9861DA5A30E008C4C37 /* Context.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0958B96C1DA5A276008C4C37 /* Context.swift */; };
 		0958B9871DA5A30E008C4C37 /* Filters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0958B96D1DA5A276008C4C37 /* Filters.swift */; };
@@ -44,6 +44,7 @@
 		0980D98C1DA109A90088923B /* SourceKittenFramework.framework in Embed Frameworks into DipGenFramework */ = {isa = PBXBuildFile; fileRef = 649CABF91D7EDA3F00AA3C44 /* SourceKittenFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0980D98D1DA109A90088923B /* SWXMLHash.framework in Embed Frameworks into DipGenFramework */ = {isa = PBXBuildFile; fileRef = 649CABFA1D7EDA3F00AA3C44 /* SWXMLHash.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0980D98E1DA109A90088923B /* Yaml.framework in Embed Frameworks into DipGenFramework */ = {isa = PBXBuildFile; fileRef = 649CABFB1D7EDA3F00AA3C44 /* Yaml.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		09AD600A1DA6C53200AA0076 /* Dip.generated.stencil in Resources */ = {isa = PBXBuildFile; fileRef = 09AD60091DA6C53200AA0076 /* Dip.generated.stencil */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -108,7 +109,7 @@
 		0929937B1D9FE66600DA3EB7 /* Annotations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Annotations.swift; sourceTree = "<group>"; };
 		0929937D1D9FE6F800DA3EB7 /* SourceKittenExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SourceKittenExtensions.swift; sourceTree = "<group>"; };
 		0929937F1D9FE72F00DA3EB7 /* CodeGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = CodeGenerator.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		0958B9451DA5997D008C4C37 /* Dip.generated.stencil */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Dip.generated.stencil; sourceTree = "<group>"; };
+		0958B9451DA5997D008C4C37 /* Dip.container.stencil */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Dip.container.stencil; sourceTree = "<group>"; };
 		0958B96C1DA5A276008C4C37 /* Context.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Context.swift; sourceTree = "<group>"; };
 		0958B96D1DA5A276008C4C37 /* Filters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Filters.swift; sourceTree = "<group>"; };
 		0958B96E1DA5A276008C4C37 /* Include.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Include.swift; sourceTree = "<group>"; };
@@ -130,6 +131,7 @@
 		0980D96A1DA107AE0088923B /* dipgen.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = dipgen.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0980D9731DA107AE0088923B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0980D9901DA10D840088923B /* Components.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Components.plist; sourceTree = "<group>"; };
+		09AD60091DA6C53200AA0076 /* Dip.generated.stencil */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Dip.generated.stencil; sourceTree = "<group>"; };
 		649CABF21D7ED9E700AA3C44 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		649CABF91D7EDA3F00AA3C44 /* SourceKittenFramework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SourceKittenFramework.framework; path = Carthage/Build/Mac/SourceKittenFramework.framework; sourceTree = "<group>"; };
 		649CABFA1D7EDA3F00AA3C44 /* SWXMLHash.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SWXMLHash.framework; path = Carthage/Build/Mac/SWXMLHash.framework; sourceTree = "<group>"; };
@@ -217,7 +219,8 @@
 				0929937D1D9FE6F800DA3EB7 /* SourceKittenExtensions.swift */,
 				0980D9251D9FF8CF0088923B /* StringExtensions.swift */,
 				092993771D9FE5FC00DA3EB7 /* Templates.swift */,
-				0958B9451DA5997D008C4C37 /* Dip.generated.stencil */,
+				0958B9451DA5997D008C4C37 /* Dip.container.stencil */,
+				09AD60091DA6C53200AA0076 /* Dip.generated.stencil */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -444,7 +447,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0958B9461DA5997D008C4C37 /* Dip.generated.stencil in Resources */,
+				0958B9461DA5997D008C4C37 /* Dip.container.stencil in Resources */,
+				09AD600A1DA6C53200AA0076 /* Dip.generated.stencil in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

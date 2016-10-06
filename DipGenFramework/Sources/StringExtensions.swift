@@ -31,7 +31,13 @@ extension String {
     }
 
     var camelCased: String {
-        return String(characters.prefix(1)).lowercaseString + String(characters.dropFirst())
+        guard let first = characters.first else { return self }
+        return String(first).lowercaseString + String(characters.dropFirst())
+    }
+
+    var titleCased: String {
+        guard let first = characters.first else { return self }
+        return String(first).uppercaseString + String(characters.dropFirst())
     }
 
 }

@@ -9,9 +9,16 @@
 import Foundation
 
 public struct Container {
-    let name: String
+    public let name: String
     var isUIContainer: Bool
     var registrations: [Registration]
+    
+    init(name: String, isUIContainer: Bool, registrations: [Registration]) {
+        var name = name
+        self.name = name.camelCased
+        self.isUIContainer = isUIContainer
+        self.registrations = registrations
+    }
     
     public var contextValue: [String: Any] {
         var contextValue: [String: Any] = ["name": name]
@@ -48,6 +55,9 @@ public struct Registration {
         if !resolvingProperties.isEmpty {
             contextValue["resolvingProperties"] = resolvingProperties.map({ $0.contextValue })
         }
+        if storyboardInstantiatable {
+            contextValue["storyboardInstantiatable"] = true
+        }
         return contextValue
     }
 }
@@ -78,7 +88,8 @@ struct Factory {
     var contextValue: [String: Any] {
         var contextValue: [String: Any] = [
             "type": type,
-            "arguments": arguments.map({ $0.contextValue })
+            "arguments": arguments.map({ $0.contextValue }),
+            "methodArguments": arguments.map({ $0.signature })
             ]
         if let constructor = constructor {
             contextValue["constructor"] = constructor
@@ -90,64 +101,108 @@ struct Factory {
     }
 }
 
-struct Argument {
+struct Argument: Equatable {
     let name: String
+    let internalName: String?
     let type: String
     
     var contextValue: [String: Any] {
-        return ["name": name, "type": type]
+        var contextValue: [String: Any] = ["name": name, "type": type]
+        if let internalName = internalName {
+            contextValue["internalName"] = internalName
+        }
+        return contextValue
     }
+    var signature: String {
+        return "\([name, internalName].flatMap({ $0 }).joinWithSeparator(" ")): \(type)"
+    }
+}
+
+func ==(lhs: Argument, rhs: Argument) -> Bool {
+    return lhs.name == rhs.name && lhs.type == rhs.type
 }
 
 struct Closure {
-    let arguments: [String]
-    let constructor: String
+    let runtimeArguments: [Argument]
+    let constructorName: String
+    let constructorArguments: [Argument]
     let type: String
     
     var contextValue: [String: Any] {
-        let body = Closure.body(self.constructor, type: self.type, insertingArguments: self.arguments)
         return [
             "body": body,
-            "arguments": arguments.joinWithSeparator(", ")
+            "arguments": runtimeArguments.map({ $0.contextValue }),
+            "argumentsNames": runtimeArguments.map({ $0.name }),
+            "internalArgumentsNames": runtimeArguments.map({ $0.internalName ?? $0.name })
         ]
     }
     
-    static func body(constructor: String, type: String, insertingArguments: [String]) -> String {
-        guard let argumentsStart = constructor.rangeOfString("(")?.startIndex else { return constructor }
-        guard let argumentsEnd = constructor.rangeOfString(")")?.startIndex else { return constructor }
-        guard argumentsStart.successor() < argumentsEnd else { return constructor }
-        let constructorArgumentsString = constructor.substringWithRange(argumentsStart.successor()..<argumentsEnd)
-        let constructorName = constructor.substringToIndex(argumentsStart)
-        let constructorArguments = constructorArgumentsString.componentsSeparatedByString(":")
-        var insertingArguments = insertingArguments
-        var constructorArgumentsPairs = [String]()
-        var addTry = false
-        for argument in constructorArguments {
-            guard !argument.isEmpty else { break }
-            if let index = insertingArguments.indexOf(argument) {
-                insertingArguments.removeAtIndex(index)
-                constructorArgumentsPairs.append("\(argument): \(argument)")
-            }
-            else {
-                addTry = true
-                constructorArgumentsPairs.append("\(argument): container.resolve()")
-            }
+    var body: String {
+        var constructorName = self.constructorName
+        let argumentsToResolve = constructorArguments.filter({ !runtimeArguments.contains($0) })
+        let addTry = !argumentsToResolve.isEmpty
+        for argument in runtimeArguments {
+            constructorName = constructorName.stringByReplacingOccurrencesOfString("\(argument.name):", withString: "\(argument.name): \(argument.name), ")
         }
-        return "\(addTry ? "try " : "")\(type).\(constructorName)(\(constructorArgumentsPairs.joinWithSeparator(", ")))"
+        for argument in argumentsToResolve {
+            constructorName = constructorName.stringByReplacingOccurrencesOfString("\(argument.name):", withString: "\(argument.name): container.resolve(), ")
+        }
+        constructorName =  constructorName.stringByReplacingOccurrencesOfString(", )", withString: ")")
+        return "\(addTry ? "try " : "")\(type).\(constructorName)"
     }
 
 }
 
-public func renderDipTemplate(containers: [Container], imports: Set<String>) throws -> String {
+enum FilterError: ErrorType {
+    case InvalidInputType
+}
+
+struct StringFilters {
+    static func titlecase(value: Any?) throws -> Any? {
+        guard let string = value as? String else { throw FilterError.InvalidInputType }
+        let strings = string.componentsSeparatedByString(" ")
+        return strings.map({ $0.titleCased }).joinWithSeparator("")
+    }
+    static func camelcase(value: Any?) throws -> Any? {
+        guard let string = value as? String else { throw FilterError.InvalidInputType }
+        return string.camelCased
+    }
+}
+
+struct ArrayFilters {
+    static func join(value: Any?) throws -> Any? {
+        guard let array = value as? [Any] else { throw FilterError.InvalidInputType }
+        let strings = array.flatMap { $0 as? String }
+        guard array.count == strings.count else { throw FilterError.InvalidInputType }
+        
+        return strings.joinWithSeparator(", ")
+    }
+}
+
+let namespace: Namespace = {
+    let namespace = Namespace()
+    namespace.registerFilter("titlecase", filter: StringFilters.titlecase)
+    namespace.registerFilter("camelcase", filter: StringFilters.camelcase)
+    namespace.registerFilter("join", filter: ArrayFilters.join)
+    return namespace
+}()
+
+public func renderContainerTemplate(container: Container, imports: Set<String>) throws -> String {
     var imports = imports
-    if !containers.filter({ $0.isUIContainer }).isEmpty {
+    if container.isUIContainer {
         imports.insert("import DipUI")
     }
     else {
         imports.insert("import Dip")
     }
 
-    let context = Context(dictionary: ["containers": containers.map({ $0.contextValue }), "imports": Array(imports)])
+    let context = Context(dictionary: ["container": container.contextValue, "imports": Array(imports)])
+    let template = try Template(named: "Dip.container.stencil", inBundle: NSBundle(forClass: FileProcessor.self))
+    return try template.render(context, namespace: namespace)
+}
+
+public func renderCommonTemplate(containers: [Container]) throws -> String {
+    let context = Context(dictionary: ["containers": Array(Set(containers.map({ $0.name })))])
     let template = try Template(named: "Dip.generated.stencil", inBundle: NSBundle(forClass: FileProcessor.self))
-    return try template.render(context)
+    return try template.render(context, namespace: namespace)
 }

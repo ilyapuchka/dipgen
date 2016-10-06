@@ -9,10 +9,19 @@ class ListPresenter {}
  @dip.storyboardInstantiatable
  
  @dip.constructor init(nibName:bundle:)
- @dip.arguments nibName
- @dip.factory BaseFactory
+ @dip.factory Base
  */
-class ListViewController: UIViewController {}
+class ListViewController: UIViewController {
+    
+    /**@dip.arguments nibName*/
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
 
 /**
  Some Real docs
@@ -21,7 +30,7 @@ class ListViewController: UIViewController {}
  @dip.register SomeProtocol
  @dip.name listWireframe
  @dip.scope Unique
- @dip.container listModule
+ @dip.factory listModule
  @dip.tag some tag
  @dip.implements NSObject, SomeProtocol
  */

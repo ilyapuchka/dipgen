@@ -23,7 +23,7 @@ public func +(lhs: [String: Container], rhs: [String: [Registration]]) -> [Strin
     return lhs
 }
 
-typealias MethodProcessingResult = (name: String, designated: Bool, arguments: [String])
+typealias MethodProcessingResult = (name: String, designated: Bool, arguments: [Argument], registrationArguments: [Argument])
 
 public class FileProcessor {
     
@@ -72,8 +72,9 @@ public class FileProcessor {
             let classDecl = declaration as! SourceKitDeclaration
             
             if let (containerName, registration) = process(class: classDecl) {
-                containers[containerName] = containers[containerName] ?? []
-                containers[containerName]?.append(registration)
+                let key = containerName.camelCased
+                containers[key] = containers[key] ?? []
+                containers[key]?.append(registration)
             }
         }
         return containers
@@ -93,11 +94,10 @@ public class FileProcessor {
         guard let classDocs = docs(declaration) else { return nil }
         
         let type = declaration[Structure.Key.name] as! String
-        var containerName = "baseContainer"
+        var containerName: String = "base"
         var definitionName: String?
         var registerAs: String?
         var constructorToRegister: String?
-        var constructorArguments: [String]?
         var tagToRegister: String?
         var scopeToRegister = "Shared"
         var implementsToRegister = [String]()
@@ -106,15 +106,10 @@ public class FileProcessor {
         
         for line in classDocs.lines() {
             if (line.contains(dipAnnotation: .register, modifier: { registerAs = $0 }) ||
-                line.contains(dipAnnotation: .container, modifier: { containerName = $0 ?? containerName }) ||
+                line.contains(dipAnnotation: .factory, modifier: { containerName = $0 ?? containerName }) ||
                 line.contains(dipAnnotation: .scope, modifier: { scopeToRegister = $0 ?? scopeToRegister }) ||
                 line.contains(dipAnnotation: .name, modifier: { definitionName = $0 ?? definitionName }) ||
                 line.contains(dipAnnotation: .constructor, modifier: { constructorToRegister = $0 }) ||
-                line.contains(dipAnnotation: .arguments, modifier: { arguments in
-                    constructorArguments = arguments?
-                        .componentsSeparatedByString(",")
-                        .map({ $0.trimmed(.whitespaceCharacterSet()) }) ?? []
-                }) ||
                 line.contains(dipAnnotation: .tag, modifier: { tag in
                     tagToRegister = tag?.trimmed("\"")
                     if tagToRegister?.isEmpty == true {
@@ -136,6 +131,8 @@ public class FileProcessor {
         
         let propertiesToResolve: [ResolvingProperty]
         let constructor: MethodProcessingResult?
+        let registrationArguments: [Argument]
+        let allConstructorArguments: [Argument]
         if let substructure = declaration[Structure.Key.substructure] as? [SourceKitRepresentable] {
             propertiesToResolve = process(properties: substructure)
             shouldRegister = shouldRegister || !propertiesToResolve.isEmpty
@@ -144,21 +141,25 @@ public class FileProcessor {
             if constructor?.designated == true {
                 shouldRegister = shouldRegister || constructor != nil
             }
-            if constructorArguments == nil {
-                constructorArguments = constructor?.arguments
-            }
+            registrationArguments = constructor?.registrationArguments ?? []
+            allConstructorArguments = constructor?.arguments ?? []
         }
         else {
             propertiesToResolve = []
             constructor = nil
+            registrationArguments = []
+            allConstructorArguments = []
         }
         
-        if shouldRegister, let constructor = constructor?.name ?? constructorToRegister  {
-            let closure = constructorArguments.map({ Closure(arguments: $0, constructor: constructor, type: type) })
-            let arguments = constructorArguments?.map({ Argument(name: $0, type: "")})
-            let factory = Factory(type: type, arguments: arguments ?? [], constructor: constructor, closure: closure)
-            return (containerName, Registration(name: definitionName ?? type.camelCased, scope: scopeToRegister, registerAs: registerAs, tag: tagToRegister, factory: factory, implements: implementsToRegister, resolvingProperties: propertiesToResolve, storyboardInstantiatable: storyboardInstantiatable))
+        if shouldRegister, let constructorName = constructorToRegister ?? constructor?.name {
+            let closure = Closure(runtimeArguments: registrationArguments, constructorName: constructorName, constructorArguments: allConstructorArguments, type: type)
+            let factory = Factory(type: type, arguments: registrationArguments, constructor: constructorName, closure: closure)
+            return (containerName, Registration(name: definitionName ?? type, scope: scopeToRegister, registerAs: registerAs, tag: tagToRegister, factory: factory, implements: implementsToRegister, resolvingProperties: propertiesToResolve, storyboardInstantiatable: storyboardInstantiatable))
         }
+        
+        //TODO: if constructor is not defined in current class/extension
+        //search for it in other class/extensions for the same type
+        //if it is not there do not create factory (if it requires runtime arguments)
         
         return nil
     }
@@ -239,18 +240,38 @@ public class FileProcessor {
             let docs = docs(declaration)
         {
             var designated = false
-            var methodArguments = [String]()
+            var registrationArgumentsNames = [String]()
             for line in docs.lines() {
                 designated = line.contains(dipAnnotation: .designated)
                 line.contains(dipAnnotation: .arguments, modifier: { arguments in
-                    methodArguments = arguments?
+                    registrationArgumentsNames = arguments?
                         .componentsSeparatedByString(",")
                         .map({ $0.trimmed(.whitespaceCharacterSet()) }) ?? []
                 })
             }
-            return (name, designated, methodArguments)
+            var methodArguments: [Argument] = []
+            let externalNames = name.methodArgumentsExternalNames()
+            if let arguments = declaration[Structure.Key.substructure] as? [SourceKitRepresentable] {
+                for (index, argument) in arguments.enumerate() {
+                    guard argument.kind == .VarParameter else { continue }
+                    let argument = argument as! SourceKitDeclaration
+                    methodArguments.append(Argument(name: externalNames[index], internalName: argument[Structure.Key.name] as? String, type: argument[Structure.Key.typename] as! String))
+                }
+            }
+            let registrationArguments = registrationArgumentsNames.flatMap(externalNames.indexOf).map({ methodArguments[$0] })
+            return (name, designated, methodArguments, registrationArguments)
         }
         return nil
     }
 
+}
+
+extension String {
+    func methodArgumentsExternalNames() -> [String] {
+        guard let argumentsStart = rangeOfString("(")?.startIndex else { return [] }
+        guard let argumentsEnd = rangeOfString(")")?.startIndex else { return [] }
+        guard argumentsStart.successor() < argumentsEnd else { return [] }
+        let constructorArgumentsString = substringWithRange(argumentsStart.successor()..<argumentsEnd)
+        return constructorArgumentsString.componentsSeparatedByString(":")
+    }
 }

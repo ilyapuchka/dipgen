@@ -13,6 +13,8 @@
 		0980D9991DA1153A0088923B /* Dip.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0980D9971DA1153A0088923B /* Dip.framework */; };
 		0980D99A1DA1153A0088923B /* DipUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0980D9981DA1153A0088923B /* DipUI.framework */; };
 		0980D99C1DA118E50088923B /* Dip.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0980D99B1DA118E50088923B /* Dip.generated.swift */; };
+		09AD600D1DA6FB5500AA0076 /* Dip.base.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09AD600B1DA6FB5500AA0076 /* Dip.base.swift */; };
+		09AD600E1DA6FB5500AA0076 /* Dip.listModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09AD600C1DA6FB5500AA0076 /* Dip.listModule.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +26,8 @@
 		0980D9971DA1153A0088923B /* Dip.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Dip.framework; path = Carthage/Build/iOS/Dip.framework; sourceTree = "<group>"; };
 		0980D9981DA1153A0088923B /* DipUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DipUI.framework; path = Carthage/Build/iOS/DipUI.framework; sourceTree = "<group>"; };
 		0980D99B1DA118E50088923B /* Dip.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Dip.generated.swift; path = DipGenTest/Dip.generated.swift; sourceTree = SOURCE_ROOT; };
+		09AD600B1DA6FB5500AA0076 /* Dip.base.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dip.base.swift; sourceTree = "<group>"; };
+		09AD600C1DA6FB5500AA0076 /* Dip.listModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dip.listModule.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +63,8 @@
 		0980D94C1DA026BB0088923B /* DipGenTest */ = {
 			isa = PBXGroup;
 			children = (
+				09AD600B1DA6FB5500AA0076 /* Dip.base.swift */,
+				09AD600C1DA6FB5500AA0076 /* Dip.listModule.swift */,
 				0980D99B1DA118E50088923B /* Dip.generated.swift */,
 				0980D9421DA026720088923B /* input.swift */,
 				0980D9921DA1144E0088923B /* CompositionRoot.swift */,
@@ -172,9 +178,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				09AD600E1DA6FB5500AA0076 /* Dip.listModule.swift in Sources */,
 				0980D9931DA1144E0088923B /* CompositionRoot.swift in Sources */,
 				0980D9531DA026C00088923B /* input.swift in Sources */,
 				0980D99C1DA118E50088923B /* Dip.generated.swift in Sources */,
+				09AD600D1DA6FB5500AA0076 /* Dip.base.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
