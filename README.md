@@ -12,9 +12,10 @@ Code generator for [Dip](https://github.com/AliSoftware/Dip). It generates code 
 dipgen uses code comments as a source for annotations. You need to use at least one annotation in a your class source code if you want to generate registration code for it. dipgen will scan all the swift source files in the target and generate registration code for all annotated classes. You can annotate classes and their extensions (that can be usefull if the class that you want to register comes from another target, i.e. third party framework).
 
 * `@dip.register [type_name]` - Marks component to be registered in container. Can have optional type to register
-* `@dip.container container_name` - Container to register component in. By default will register in `baseContainer`.
+* `@dip.factory [name] Factory and container name to register component in. For example using name "root" will generate "rootContainer" and "RootFactory". By default will register in "base" container.
 * `@dip.designated` - Marks constructor as designated. It will be used by component's definition as a factory. Required if annotated code defines more than one constructor. Will be ignored if `@dip.constructor` is used.
 * `@dip.constructor constructor_name` - Constructor to use as factory. Will ignore `@dip.designated` annotation.
+* `@dip.arguments` - list of runtime arguments for registration. Should match external names of arguments. Can be used only on method declaration (constructors or sattic/class methods).
 * `@dip.name name` - Name of registration
 * `@dip.tag tag` - Optional tag to register component for
 * `@dip.implements type_name[, type_name]` - List of types implementd by component that can be resolved by the same definition.
@@ -43,7 +44,7 @@ class ListViewController: UIViewController {}
  @dip.register ListWireframe
  @dip.name listWireframe
  @dip.scope Unique
- @dip.container listModule
+ @dip.factory listModule
  @dip.tag some tag
  @dip.implements SomeProtocol
  */
@@ -81,6 +82,8 @@ class ListWireframe: SomeProtocol {
 <details>
 <summary>Generated code example</summary>
 
+Dip.base.swift
+
 ```swift
 import UIKit
 import DipUI
@@ -94,7 +97,27 @@ let baseContainer = DependencyContainer { container in
 	container.register(.Shared, factory: ListViewController.init)
 }
 
-let listModule = DependencyContainer { container in 
+class BaseFactory {
+
+	private let container: DependencyContainer
+	
+	init(container: DependencyContainer = baseContainer) {
+		self.container = container
+	}
+
+	func listViewController() -> ListViewController {
+		return try! container.resolve()
+	}
+}
+
+```
+
+Dip.listModule.swift
+
+```swift
+import Dip
+
+let listModuleContainer = DependencyContainer { container in 
 	unowned let container = container
 
 	let listWireframe = container.register(.Unique, type: ListWireframe.self, tag: "some tag", factory: ListWireframe.init(rootWireframe:addWireframe:listPresenter:))
@@ -106,7 +129,25 @@ let listModule = DependencyContainer { container in
 		}
 }
 
+class ListModuleFactory {
 
+	private let container: DependencyContainer
+
+	init(container: DependencyContainer = listModuleContainer) {
+		self.container = container
+	}
+
+	func listWireframeSomeTag() -> ListWireframe {
+		return try! container.resolve(tag: "some tag")
+	}
+
+}
+
+```
+
+Dip.generated.swift
+
+```swift
 extension DependencyContainer {
 
 	static func configureAll() {
@@ -133,5 +174,6 @@ Download project and run `make install` from it's source root. You need [Carthag
 - [ ] Add example for each annotation
 - [ ] Tests
 - [ ] Improve documentation
-- [ ] Move to some templates engine, i.e. [Stencil](https://github.com/kylef/Stencil)
+- [x] Move to some templates engine, i.e. [Stencil](https://github.com/kylef/Stencil)
+- [ ] Move to some cli interface frameworks, i.e. Commandant
 - [ ] Homebrew 
