@@ -29,18 +29,24 @@ extension Structure {
     
 }
 
+extension SyntaxMap {
+    func imports(content: String) -> [String] {
+        return tokens.enumerate()
+            .filter { (_, token) -> Bool in
+                token.type == SyntaxKind.Keyword.value &&
+                    content.substringWithByteRange(start: token.offset, length: token.length) == "import"
+            }
+            .map { index, _ in tokens[index + 1] }
+            .flatMap { token in content.substringWithByteRange(start: token.offset, length: token.length) }
+    }
+}
+
 extension File {
     
     public func imports() -> [String] {
-        return contents.lines().flatMap({ $0.importModule })
+        return SyntaxMap(file: self).imports(contents)
     }
     
-}
-
-extension Line {
-    var importModule: String? {
-        return content.hasPrefix("import") ? content: nil
-    }
 }
 
 public typealias SourceKitDeclaration = [String: SourceKitRepresentable]

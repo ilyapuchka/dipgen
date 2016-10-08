@@ -24,7 +24,7 @@ enum DipAnnotation: String, CustomStringConvertible {
     ///List of runtime arguments for registration. Should match external names of arguments.
     ///Can be used only on method declaration (constructors or sattic/class methods).
     case arguments
-    ///Name of registration.
+    ///Name of factory method.
     case name
     ///Optional tag to register component for.
     case tag

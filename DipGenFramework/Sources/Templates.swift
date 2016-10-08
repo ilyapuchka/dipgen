@@ -14,7 +14,6 @@ public struct Container {
     var registrations: [Registration]
     
     init(name: String, isUIContainer: Bool, registrations: [Registration]) {
-        var name = name
         self.name = name.camelCased
         self.isUIContainer = isUIContainer
         self.registrations = registrations
@@ -190,10 +189,10 @@ let namespace: Namespace = {
 public func renderContainerTemplate(container: Container, imports: Set<String>) throws -> String {
     var imports = imports
     if container.isUIContainer {
-        imports.insert("import DipUI")
+        imports.insert("DipUI")
     }
     else {
-        imports.insert("import Dip")
+        imports.insert("Dip")
     }
 
     let context = Context(dictionary: ["container": container.contextValue, "imports": Array(imports)])
