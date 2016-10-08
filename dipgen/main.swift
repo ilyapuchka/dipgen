@@ -7,7 +7,9 @@ do {
     let environment = try Environment(processInfo: NSProcessInfo())
     let project = try XCProjectFile(path: environment.projectFilePath)
     let files = try project.sourceFilesPaths(environment)
-        .filter({ $0.isSwiftFile() == true })
+        .filter({ $0.isSwiftFile() == true &&
+            !($0 as NSString).lastPathComponent.hasPrefix("Dip.")
+        })
         .flatMap(File.init(path:))
     let processingResult = try files
         .map(FileProcessor.init(file:))
