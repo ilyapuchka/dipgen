@@ -47,6 +47,9 @@ public struct Registration {
         if let registerAs = registerAs {
             contextValue["registerAs"] = registerAs
         }
+        if registerAs != factory.type {
+            contextValue["instanceType"] = factory.type
+        }
         if let tag = tag {
             contextValue["tag"] = tag
         }

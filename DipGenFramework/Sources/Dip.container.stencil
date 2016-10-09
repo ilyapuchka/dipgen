@@ -13,9 +13,9 @@ let {{ container.name }}Container = DependencyContainer { container in
         {{ registration.factory.closure.body }}
     }{% else %}{{ registration.factory.type }}.{{ registration.factory.constructor }}{% endif %}){% if registration.implements %}
         .implements({{ registration.implements }}){% endif %}{% if registration.resolvingProperties %}
-        .resolvingProperties { container, resolved in
-            let resolved = resolved as! {{ registration.factory.type }}
-            {% for property in registration.resolvingProperties %}
+        .resolvingProperties { container, resolved in {% if registration.instanceType %}
+            let resolved = resolved as! {{ registration.instanceType }}
+            {% endif %}{% for property in registration.resolvingProperties %}
             resolved.{{ property.name }} = try container.resolve({% if property.tag %}tag: "{{ property.tag }}"{% endif %}){% if property.resolveAs %} as {{ property.resolveAs }}{% endif %}{%endfor%}
     }{% endif %}{% endfor %}
 }
