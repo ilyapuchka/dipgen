@@ -3,7 +3,7 @@ import Dip
 extension DependencyContainer {
 
     static func configureAll() { {% for container in containers %}
-        let _ = {{ container }}Container{% endfor %}
+        _ = {{ container }}Container{% endfor %}
     }
 
     static func bootstrapAll() throws { {% for container in containers %}
