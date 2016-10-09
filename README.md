@@ -151,8 +151,8 @@ Dip.generated.swift
 extension DependencyContainer {
 
 	static func configureAll() {
-		let _ = baseContainer
-		let _ = listModule
+		_ = baseContainer
+		_ = listModule
 	}
 
 	static func bootstrapAll() throws {
@@ -173,7 +173,7 @@ Download project and run `make install` from it's source root. You need [Carthag
 
 - [ ] Add example for each annotation
 - [ ] Tests
-- [ ] Improve documentation
+- [ ] Improve documentation, add annotations to cli help
 - [x] Move to some templates engine, i.e. [Stencil](https://github.com/kylef/Stencil)
-- [ ] Move to some cli interface frameworks, i.e. Commandant
-- [ ] Homebrew 
+- [ ] Move to some cli frameworks, i.e. Commandant
+- [ ] Installing via Homebrew 
