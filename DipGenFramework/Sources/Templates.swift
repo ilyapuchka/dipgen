@@ -31,7 +31,7 @@ public struct Container {
 
 public struct Registration {
     let name: String
-    let scope: String
+    let scope: String?
     let registerAs: String?
     let tag: String?
     let factory: Factory
@@ -40,7 +40,10 @@ public struct Registration {
     let storyboardInstantiatable: Bool
     
     var contextValue: [String: Any] {
-        var contextValue: [String: Any] = ["name": name, "scope": scope]
+        var contextValue: [String: Any] = ["name": name]
+        if let scope = scope {
+            contextValue["scope"] = scope
+        }
         if let registerAs = registerAs {
             contextValue["registerAs"] = registerAs
         }

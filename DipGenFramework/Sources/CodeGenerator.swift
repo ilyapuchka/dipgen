@@ -99,7 +99,7 @@ public class FileProcessor {
         var registerAs: String?
         var constructorToRegister: String?
         var tagToRegister: String?
-        var scopeToRegister = "Shared"
+        var scopeToRegister: String?
         var implementsToRegister = [String]()
         var storyboardInstantiatable: Bool = false
         var shouldRegister = false
