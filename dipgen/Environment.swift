@@ -28,14 +28,12 @@ struct Environment {
     let sourceRoot: String
     let targetName: String
     let outputPath: String
-    let swiftVersion: String
     let dipVersion: String
     let dipUIVersion: String
     
     init(processInfo: NSProcessInfo) throws {
         let arguments = processInfo.arguments
         outputPath = get(arguments, name: "-o", fullName: "--output", defaultValue: "")
-        swiftVersion = get(arguments, name: "-s", fullName: "--swift-version", defaultValue: "3.0")
         dipVersion = get(arguments, name: "-dip", fullName: "--dip-version", defaultValue: "5.0")
         dipUIVersion = get(arguments, name: "-dipui", fullName: "--dipui-version", defaultValue: "1.0")
         
