@@ -11,17 +11,27 @@ Code generator for [Dip](https://github.com/AliSoftware/Dip). It generates code 
 ### Annotations
 dipgen uses code comments as a source for annotations. You need to use at least one annotation in a your class source code if you want to generate registration code for it. dipgen will scan all the swift source files in the target and generate registration code for all annotated classes. You can annotate classes and their extensions (that can be usefull if the class that you want to register comes from another target, i.e. third party framework).
 
-* `@dip.register [type_name]` - Marks component to be registered in container. Can have optional type to register
-* `@dip.factory [name] Factory and container name to register component in. For example using name "root" will generate "rootContainer" and "RootFactory". By default will register in "base" container.
-* `@dip.designated` - Marks constructor as designated. It will be used by component's definition as a factory. Required if annotated code defines more than one constructor. Will be ignored if `@dip.constructor` is used.
-* `@dip.constructor constructor_name` - Constructor to use as factory. Will ignore `@dip.designated` annotation.
-* `@dip.arguments` - list of runtime arguments for registration. Should match external names of arguments. Can be used only on method declaration (constructors or sattic/class methods).
-* `@dip.name name` - Name of registration
-* `@dip.tag tag` - Optional tag to register component for
-* `@dip.implements type_name[, type_name]` - List of types implementd by component that can be resolved by the same definition.
-* `@dip.scope scope` - Scope to register component in
-* `@dip.inject [type_name]` - Marks property to be injected in `resolveDependencies` block. Property should have accessible setter.
-* `@dip.storyboardInstantiatable` - Marks class to implement StoryboardInstantiatable protocol. Container that contains definition for this class will be added to ui containers.
+- `register [TypeName]` -- Marks component to be registered in container. Can have optional type to register
+
+- `factory Name` -- Factory and container name to register component in. For example using name "root" will generate "rootContainer" and "RootFactory". By default will register in "base" container.
+
+- `designated` -- Marks constructor as designated. It will be used by component's definition as a factory. Required if annotated code defines more than one constructor. Will be ignored if constructor annotation is used.
+
+- `constructor ConstructorName` - Constructor to use as factory. Will ignore designated annotation.
+
+- `arguments ArgumentName, ...` -- list of runtime arguments for registration. Should match external names of arguments. Can be used only on method declaration (constructors or sattic/class methods).
+
+- `name Name` -- Name of factory method. By default will use camelcased type name.
+
+- `tag Tag` -- Optional tag to register component for. If no custom name provided tag will be appended to default factory name.
+
+- `implements TypeName, ...` -- List of types implementd by component that can be resolved by the same definition.
+
+- `scope Scope` -- Scope to register component in.
+
+- `inject [TypeName]` -- Marks property to be injected in resolveDependencies block. Property should have accessible setter.
+
+- `storyboardInstantiatable` -- Marks class to implement StoryboardInstantiatable protocol. Container that contains definition for this class will be added to ui containers.
 
 See test project for another example of using annotations.
 
@@ -173,7 +183,6 @@ Download project and run `make install` from it's source root. You need [Carthag
 
 - [ ] Add example for each annotation
 - [ ] Tests
-- [ ] Improve documentation, add annotations to cli help
+- [x] Improve documentation, add annotations to cli help
 - [x] Move to some templates engine, i.e. [Stencil](https://github.com/kylef/Stencil)
 - [x] Move to some cli frameworks, i.e. Commandant
-- [ ] Installing via Homebrew 

@@ -3,8 +3,8 @@ import Dip
 extension DependencyContainer {
 
     static func configureAll() { 
-        let _ = baseContainer
-        let _ = listModuleContainer
+        _ = baseContainer
+        _ = listModuleContainer
     }
 
     static func bootstrapAll() throws { 

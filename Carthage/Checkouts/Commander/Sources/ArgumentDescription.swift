@@ -228,18 +228,20 @@ class Help : ErrorType, CustomStringConvertible {
   let command:String?
   let group:Group?
   let descriptors:[BoxedArgumentDescriptor]
-
-  init(_ descriptors:[BoxedArgumentDescriptor], command:String? = nil, group:Group? = nil) {
+    let additionalHelp: String?
+    
+  init(_ descriptors:[BoxedArgumentDescriptor], command:String? = nil, group:Group? = nil, additionalHelp: String? = nil) {
     self.command = command
     self.group = group
     self.descriptors = descriptors
+    self.additionalHelp = additionalHelp
   }
 
   func reraise(command:String? = nil) -> Help {
     if let oldCommand = self.command, newCommand = command {
-      return Help(descriptors, command: "\(newCommand) \(oldCommand)")
+        return Help(descriptors, command: "\(newCommand) \(oldCommand)", additionalHelp: additionalHelp)
     }
-    return Help(descriptors, command: command ?? self.command)
+    return Help(descriptors, command: command ?? self.command, additionalHelp: additionalHelp)
   }
 
   var description:String {
@@ -283,7 +285,9 @@ class Help : ErrorType, CustomStringConvertible {
         }
       }
     }
-
+    if let additionalHelp = additionalHelp {
+        output.append("\n\(additionalHelp)")
+    }
     return output.joinWithSeparator("\n")
   }
 }

@@ -127,12 +127,13 @@ public func command<A:ArgumentDescriptor>(descriptor:A, closure:(A.ValueType) th
 }
 
 /// Create a command which takes 2 argument using a closure with arguments
-public func command<A:ArgumentDescriptor, A1:ArgumentDescriptor>(descriptor:A, _ descriptor1:A1, closure:(A.ValueType, A1.ValueType) throws -> ()) -> CommandType {
+public func command<A:ArgumentDescriptor, A1:ArgumentDescriptor>(descriptor:A, _ descriptor1:A1, help additionalHelp: String? = nil, closure:(A.ValueType, A1.ValueType) throws -> ()) -> CommandType {
   return AnonymousCommand { parser in
     let help = Help([
         BoxedArgumentDescriptor(value: descriptor),
-        BoxedArgumentDescriptor(value: descriptor1),
-    ])
+        BoxedArgumentDescriptor(value: descriptor1)
+        ], additionalHelp: additionalHelp
+    )
 
     if parser.hasOption("help") {
       throw help
@@ -150,13 +151,14 @@ public func command<A:ArgumentDescriptor, A1:ArgumentDescriptor>(descriptor:A, _
 }
 
 /// Create a command which takes 3 argument using a closure with arguments
-public func command<A:ArgumentDescriptor, A1:ArgumentDescriptor, A2:ArgumentDescriptor>(descriptor:A, _ descriptor1:A1, _ descriptor2:A2, closure:(A.ValueType, A1.ValueType, A2.ValueType) throws -> ()) -> CommandType {
+public func command<A:ArgumentDescriptor, A1:ArgumentDescriptor, A2:ArgumentDescriptor>(descriptor:A, _ descriptor1:A1, _ descriptor2:A2, help additionalHelp: String? = nil, closure:(A.ValueType, A1.ValueType, A2.ValueType) throws -> ()) -> CommandType {
   return AnonymousCommand { parser in
     let help = Help([
         BoxedArgumentDescriptor(value: descriptor),
         BoxedArgumentDescriptor(value: descriptor1),
         BoxedArgumentDescriptor(value: descriptor2),
-    ])
+        ], additionalHelp: additionalHelp
+    )
 
     if parser.hasOption("help") {
       throw help
@@ -175,14 +177,15 @@ public func command<A:ArgumentDescriptor, A1:ArgumentDescriptor, A2:ArgumentDesc
 }
 
 /// Create a command which takes 4 argument using a closure with arguments
-public func command<A:ArgumentDescriptor, A1:ArgumentDescriptor, A2:ArgumentDescriptor, A3:ArgumentDescriptor>(descriptor:A, _ descriptor1:A1, _ descriptor2:A2, _ descriptor3:A3, closure:(A.ValueType, A1.ValueType, A2.ValueType, A3.ValueType) throws -> ()) -> CommandType {
+public func command<A:ArgumentDescriptor, A1:ArgumentDescriptor, A2:ArgumentDescriptor, A3:ArgumentDescriptor>(descriptor:A, _ descriptor1:A1, _ descriptor2:A2, _ descriptor3:A3, help additionalHelp: String? = nil, closure:(A.ValueType, A1.ValueType, A2.ValueType, A3.ValueType) throws -> ()) -> CommandType {
   return AnonymousCommand { parser in
     let help = Help([
         BoxedArgumentDescriptor(value: descriptor),
         BoxedArgumentDescriptor(value: descriptor1),
         BoxedArgumentDescriptor(value: descriptor2),
         BoxedArgumentDescriptor(value: descriptor3),
-    ])
+        ], additionalHelp: additionalHelp
+    )
 
     if parser.hasOption("help") {
       throw help

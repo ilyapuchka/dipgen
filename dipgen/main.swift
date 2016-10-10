@@ -4,8 +4,10 @@ import SourceKittenFramework
 import Xcode
 
 let main = command(
-    Option("output", ".", description: "Path to generated files.")
-) { outputPath in
+    Option("output", ".", description: "Path to generated files."),
+    Flag("verbose", description: "Prints process information."),
+    help: "Annotations: \n\n\(DipAnnotation.allValues.map({ $0.help }).joinWithSeparator("\n\n"))"
+) { (outputPath, verbose) in
     do {
         let environment = try Environment(processInfo: NSProcessInfo())
         let project = try XCProjectFile(path: environment.projectFilePath)
@@ -18,19 +20,26 @@ let main = command(
         
         let processingResult = try files
             .map(FileProcessor.init(file:))
-            .map({ try $0.process() })
+            .map({
+                if verbose { print("Processing \($0.file.path!)") }
+                return try $0.process()
+            })
             .reduce([String: Container](), combine: +)
             .map({ $0.1 })
         
         let imports = Set(files.flatMap({ $0.imports() }))
         
+        if verbose { print("") }
         for container in processingResult {
+            let fileName = "Dip.\(container.name).swift"
+            if verbose { print("Generating \(fileName)")}
             let content = try renderContainerTemplate(container, imports: imports)
-            let containerFileURL = NSURL(fileURLWithPath: "Dip.\(container.name).swift", relativeToURL: NSURL(fileURLWithPath: outputPath))
+            let containerFileURL = NSURL(fileURLWithPath: fileName, relativeToURL: NSURL(fileURLWithPath: outputPath))
             try content.writeToURL(containerFileURL, atomically: true, encoding: NSUTF8StringEncoding)
         }
         
         let content = try renderCommonTemplate(processingResult)
+        if verbose { print("Generating Dip.generated.swift")}
         let commonFileURL = NSURL(fileURLWithPath: "Dip.generated.swift", relativeToURL: NSURL(fileURLWithPath: outputPath))
         try content.writeToURL(commonFileURL, atomically: true, encoding: NSUTF8StringEncoding)
     } catch {
