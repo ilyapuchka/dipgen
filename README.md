@@ -175,5 +175,5 @@ Download project and run `make install` from it's source root. You need [Carthag
 - [ ] Tests
 - [ ] Improve documentation, add annotations to cli help
 - [x] Move to some templates engine, i.e. [Stencil](https://github.com/kylef/Stencil)
-- [ ] Move to some cli frameworks, i.e. Commandant
+- [x] Move to some cli frameworks, i.e. Commandant
 - [ ] Installing via Homebrew 

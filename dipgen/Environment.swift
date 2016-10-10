@@ -27,16 +27,8 @@ struct Environment {
     let sdkRoot: String
     let sourceRoot: String
     let targetName: String
-    let outputPath: String
-    let dipVersion: String
-    let dipUIVersion: String
     
     init(processInfo: NSProcessInfo) throws {
-        let arguments = processInfo.arguments
-        outputPath = get(arguments, name: "-o", fullName: "--output", defaultValue: "")
-        dipVersion = get(arguments, name: "-dip", fullName: "--dip-version", defaultValue: "5.0")
-        dipUIVersion = get(arguments, name: "-dipui", fullName: "--dipui-version", defaultValue: "1.0")
-        
         let environment = processInfo.environment
         projectFilePath    = try get(environment, "PROJECT_FILE_PATH")
         buildProductsDir   = try get(environment, "BUILT_PRODUCTS_DIR")

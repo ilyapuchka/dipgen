@@ -45,6 +45,14 @@
 		0980D98D1DA109A90088923B /* SWXMLHash.framework in Embed Frameworks into DipGenFramework */ = {isa = PBXBuildFile; fileRef = 649CABFA1D7EDA3F00AA3C44 /* SWXMLHash.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0980D98E1DA109A90088923B /* Yaml.framework in Embed Frameworks into DipGenFramework */ = {isa = PBXBuildFile; fileRef = 649CABFB1D7EDA3F00AA3C44 /* Yaml.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		09AD600A1DA6C53200AA0076 /* Dip.generated.stencil in Resources */ = {isa = PBXBuildFile; fileRef = 09AD60091DA6C53200AA0076 /* Dip.generated.stencil */; };
+		09FC482D1DAC2C4700566AA8 /* ArgumentConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FC48241DAC2C4700566AA8 /* ArgumentConvertible.swift */; };
+		09FC482E1DAC2C4700566AA8 /* ArgumentDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FC48251DAC2C4700566AA8 /* ArgumentDescription.swift */; };
+		09FC482F1DAC2C4700566AA8 /* ArgumentParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FC48261DAC2C4700566AA8 /* ArgumentParser.swift */; };
+		09FC48301DAC2C4700566AA8 /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FC48271DAC2C4700566AA8 /* Command.swift */; };
+		09FC48311DAC2C4700566AA8 /* CommandRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FC48281DAC2C4700566AA8 /* CommandRunner.swift */; };
+		09FC48321DAC2C4700566AA8 /* Commands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FC48291DAC2C4700566AA8 /* Commands.swift */; };
+		09FC48331DAC2C4700566AA8 /* CommandType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FC482A1DAC2C4700566AA8 /* CommandType.swift */; };
+		09FC48351DAC2C4700566AA8 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FC482C1DAC2C4700566AA8 /* Group.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -132,6 +140,14 @@
 		0980D9731DA107AE0088923B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0980D9901DA10D840088923B /* Components.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Components.plist; sourceTree = "<group>"; };
 		09AD60091DA6C53200AA0076 /* Dip.generated.stencil */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Dip.generated.stencil; sourceTree = "<group>"; };
+		09FC48241DAC2C4700566AA8 /* ArgumentConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArgumentConvertible.swift; sourceTree = "<group>"; };
+		09FC48251DAC2C4700566AA8 /* ArgumentDescription.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArgumentDescription.swift; sourceTree = "<group>"; };
+		09FC48261DAC2C4700566AA8 /* ArgumentParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArgumentParser.swift; sourceTree = "<group>"; };
+		09FC48271DAC2C4700566AA8 /* Command.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
+		09FC48281DAC2C4700566AA8 /* CommandRunner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandRunner.swift; sourceTree = "<group>"; };
+		09FC48291DAC2C4700566AA8 /* Commands.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Commands.swift; sourceTree = "<group>"; };
+		09FC482A1DAC2C4700566AA8 /* CommandType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandType.swift; sourceTree = "<group>"; };
+		09FC482C1DAC2C4700566AA8 /* Group.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
 		649CABF21D7ED9E700AA3C44 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		649CABF91D7EDA3F00AA3C44 /* SourceKittenFramework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SourceKittenFramework.framework; path = Carthage/Build/Mac/SourceKittenFramework.framework; sourceTree = "<group>"; };
 		649CABFA1D7EDA3F00AA3C44 /* SWXMLHash.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SWXMLHash.framework; path = Carthage/Build/Mac/SWXMLHash.framework; sourceTree = "<group>"; };
@@ -262,6 +278,7 @@
 			isa = PBXGroup;
 			children = (
 				0980D9791DA107EA0088923B /* Supporting Files */,
+				09FC48231DAC2C4700566AA8 /* Commander */,
 				0980D9591DA038920088923B /* Environment.swift */,
 				0980D95B1DA039020088923B /* XCProjectFileExtensions.swift */,
 				649CABF21D7ED9E700AA3C44 /* main.swift */,
@@ -276,6 +293,22 @@
 				0980D9731DA107AE0088923B /* Info.plist */,
 			);
 			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		09FC48231DAC2C4700566AA8 /* Commander */ = {
+			isa = PBXGroup;
+			children = (
+				09FC48241DAC2C4700566AA8 /* ArgumentConvertible.swift */,
+				09FC48251DAC2C4700566AA8 /* ArgumentDescription.swift */,
+				09FC48261DAC2C4700566AA8 /* ArgumentParser.swift */,
+				09FC48271DAC2C4700566AA8 /* Command.swift */,
+				09FC48281DAC2C4700566AA8 /* CommandRunner.swift */,
+				09FC48291DAC2C4700566AA8 /* Commands.swift */,
+				09FC482A1DAC2C4700566AA8 /* CommandType.swift */,
+				09FC482C1DAC2C4700566AA8 /* Group.swift */,
+			);
+			name = Commander;
+			path = ../Carthage/Checkouts/Commander/Sources;
 			sourceTree = "<group>";
 		};
 		649CABE61D7ED9E700AA3C44 = {
@@ -531,9 +564,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				09FC482D1DAC2C4700566AA8 /* ArgumentConvertible.swift in Sources */,
+				09FC48321DAC2C4700566AA8 /* Commands.swift in Sources */,
 				0980D9801DA108AC0088923B /* XCProjectFileExtensions.swift in Sources */,
+				09FC48351DAC2C4700566AA8 /* Group.swift in Sources */,
+				09FC48331DAC2C4700566AA8 /* CommandType.swift in Sources */,
+				09FC482E1DAC2C4700566AA8 /* ArgumentDescription.swift in Sources */,
 				0980D97F1DA108AC0088923B /* Environment.swift in Sources */,
+				09FC48301DAC2C4700566AA8 /* Command.swift in Sources */,
 				0980D9811DA108AC0088923B /* main.swift in Sources */,
+				09FC482F1DAC2C4700566AA8 /* ArgumentParser.swift in Sources */,
+				09FC48311DAC2C4700566AA8 /* CommandRunner.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

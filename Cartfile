@@ -1,2 +1,3 @@
 github "jpsim/SourceKitten"
 github "ilyapuchka/Xcode.swift" "develop"
+github "kylef/Commander" == 0.4.1
