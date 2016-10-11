@@ -39,8 +39,8 @@ let main = command(
         }
         
         let content = try renderCommonTemplate(processingResult)
-        if verbose { print("Generating Dip.generated.swift")}
-        let commonFileURL = NSURL(fileURLWithPath: "Dip.generated.swift", relativeToURL: NSURL(fileURLWithPath: outputPath))
+        if verbose { print("Generating Dip.configure.swift")}
+        let commonFileURL = NSURL(fileURLWithPath: "Dip.configure.swift", relativeToURL: NSURL(fileURLWithPath: outputPath))
         try content.writeToURL(commonFileURL, atomically: true, encoding: NSUTF8StringEncoding)
     } catch {
         print(error)
