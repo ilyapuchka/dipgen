@@ -33,7 +33,7 @@ let main = command(
         for container in processingResult {
             let fileName = "Dip.\(container.name).swift"
             if verbose { print("Generating \(fileName)")}
-            let content = try renderContainerTemplate(container, imports: imports)
+            let content = try renderContainerTemplate(container, imports: imports, swiftVersion: environment.swiftVersion)
             let containerFileURL = NSURL(fileURLWithPath: fileName, relativeToURL: NSURL(fileURLWithPath: outputPath))
             try content.writeToURL(containerFileURL, atomically: true, encoding: NSUTF8StringEncoding)
         }

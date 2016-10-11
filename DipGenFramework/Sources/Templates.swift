@@ -192,7 +192,9 @@ let namespace: Namespace = {
     return namespace
 }()
 
-public func renderContainerTemplate(container: Container, imports: Set<String>) throws -> String {
+public func renderContainerTemplate(container: Container, imports: Set<String>, swiftVersion: String) throws -> String {
+    namespace.registerFilter("scope", filter: (swiftVersion >= "3.0") ? lowercase : capitalise)
+    
     var imports = imports
     if container.isUIContainer {
         imports.insert("DipUI")

@@ -27,6 +27,7 @@ struct Environment {
     let sdkRoot: String
     let sourceRoot: String
     let targetName: String
+    let swiftVersion: String
     
     init(processInfo: NSProcessInfo) throws {
         let environment = processInfo.environment
@@ -36,6 +37,7 @@ struct Environment {
         sdkRoot            = try get(environment, "SDKROOT")
         sourceRoot         = try get(environment, "SOURCE_ROOT")
         targetName         = try get(environment, "TARGET_NAME")
+        swiftVersion       = try get(environment, "SWIFT_VERSION")
     }
     
     func url(forSourceTreeFolder sourceTreeFolder: SourceTreeFolder) -> NSURL {

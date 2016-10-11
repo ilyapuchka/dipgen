@@ -9,7 +9,7 @@ let {{ container.name }}Container = DependencyContainer { container in
     unowned let container = container{% if container.isUIContainer %}
     DependencyContainer.uiContainers.append(container){% endif %}
     {% for registration in container.registrations %}
-    container.register({% if registration.scope %}.{{ registration.scope }}, {% endif %}{% if registration.registerAs %}type: {{ registration.registerAs }}.self, {% endif %}{% if registration.tag %}tag: "{{ registration.tag }}", {% endif %}factory: {% if registration.factory.arguments %}{ {{ registration.factory.closure.argumentsNames|join }} in
+    container.register({% if registration.scope %}.{{ registration.scope|scope }}, {% endif %}{% if registration.registerAs %}type: {{ registration.registerAs }}.self, {% endif %}{% if registration.tag %}tag: "{{ registration.tag }}", {% endif %}factory: {% if registration.factory.arguments %}{ {{ registration.factory.closure.argumentsNames|join }} in
         {{ registration.factory.closure.body }}
     }{% else %}{{ registration.factory.type }}.{{ registration.factory.constructor }}{% endif %}){% if registration.implements %}
         .implements({{ registration.implements }}){% endif %}{% if registration.resolvingProperties %}
