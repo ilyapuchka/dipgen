@@ -242,7 +242,7 @@ public class FileProcessor {
             var designated = false
             var registrationArgumentsNames = [String]()
             for line in docs.lines() {
-                designated = line.contains(dipAnnotation: .designated)
+                designated = designated || line.contains(dipAnnotation: .designated)
                 line.contains(dipAnnotation: .arguments, modifier: { arguments in
                     registrationArgumentsNames = arguments?
                         .componentsSeparatedByString(",")
@@ -255,7 +255,9 @@ public class FileProcessor {
                 for (index, argument) in arguments.enumerate() {
                     guard argument.kind == .VarParameter else { continue }
                     let argument = argument as! SourceKitDeclaration
-                    methodArguments.append(Argument(name: externalNames[index], internalName: argument[Structure.Key.name] as? String, type: argument[Structure.Key.typename] as! String))
+                    let internalName = argument[Structure.Key.name] as! String
+                    let type = argument[Structure.Key.typename] as! String
+                    methodArguments.append(Argument(name: externalNames[index], internalName: internalName, type: type))
                 }
             }
             let registrationArguments = registrationArgumentsNames.flatMap(externalNames.indexOf).map({ methodArguments[$0] })
@@ -272,6 +274,10 @@ extension String {
         guard let argumentsEnd = rangeOfString(")")?.startIndex else { return [] }
         guard argumentsStart.successor() < argumentsEnd else { return [] }
         let constructorArgumentsString = substringWithRange(argumentsStart.successor()..<argumentsEnd)
-        return constructorArgumentsString.componentsSeparatedByString(":")
+        let arguments = constructorArgumentsString.componentsSeparatedByString(":")
+        if arguments.count > 1 {
+            return Array(arguments.dropLast())
+        }
+        return arguments
     }
 }

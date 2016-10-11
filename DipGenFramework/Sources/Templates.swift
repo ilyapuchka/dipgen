@@ -108,18 +108,21 @@ struct Factory {
 
 struct Argument: Equatable {
     let name: String
-    let internalName: String?
+    let internalName: String
     let type: String
+    var _internalName: String {
+        return internalName == name ? "_\(name)" : internalName
+    }
     
     var contextValue: [String: Any] {
-        var contextValue: [String: Any] = ["name": name, "type": type]
-        if let internalName = internalName {
-            contextValue["internalName"] = internalName
-        }
-        return contextValue
+        return [
+            "name": name,
+            "type": type,
+            "internalName": _internalName
+        ]
     }
     var signature: String {
-        return "\([name, internalName].flatMap({ $0 }).joinWithSeparator(" ")): \(type)"
+        return "\([name, _internalName].flatMap({ $0 }).joinWithSeparator(" ")): \(type)"
     }
 }
 
@@ -138,7 +141,7 @@ struct Closure {
             "body": body,
             "arguments": runtimeArguments.map({ $0.contextValue }),
             "argumentsNames": runtimeArguments.map({ $0.name }),
-            "internalArgumentsNames": runtimeArguments.map({ $0.internalName ?? $0.name })
+            "internalArgumentsNames": runtimeArguments.map({ $0._internalName })
         ]
     }
     
@@ -194,7 +197,7 @@ let namespace: Namespace = {
 
 public func renderContainerTemplate(container: Container, imports: Set<String>, swiftVersion: String) throws -> String {
     namespace.registerFilter("scope", filter: (swiftVersion >= "3.0") ? lowercase : capitalise)
-    
+
     var imports = imports
     if container.isUIContainer {
         imports.insert("DipUI")
