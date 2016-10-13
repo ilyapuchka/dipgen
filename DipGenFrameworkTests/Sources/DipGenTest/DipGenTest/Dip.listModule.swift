@@ -9,9 +9,9 @@ import Foundation
 let listModuleContainer = DependencyContainer { container in
     unowned let container = container
     
-    container.register(.Unique, type: ListWireframe.self, tag: "some tag", factory: ListWireframe.init(rootWireframe:addWireframe:listPresenter:))
+    container.register(.unique, type: SomeProtocol.self, tag: "some tag", factory: ListWireframe.init(rootWireframe:addWireframe:listPresenter:))
         .implements(NSObject.self, SomeProtocol.self)
-        .resolvingProperties { container, resolved in
+        .resolvingProperties { container, resolved in 
             let resolved = resolved as! ListWireframe
             
             resolved.addWireframe = try container.resolve(tag: "tag") as AddWireframe
@@ -28,7 +28,7 @@ class ListModuleFactory {
         self.container = container
     }
     
-    func listWireframeSomeTag() -> ListWireframe {
+    func listWireframeSomeTag() -> SomeProtocol {
         return try! container.resolve(tag: "some tag")
     }
     

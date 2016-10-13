@@ -12,9 +12,9 @@
 		0980D9931DA1144E0088923B /* CompositionRoot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0980D9921DA1144E0088923B /* CompositionRoot.swift */; };
 		0980D9991DA1153A0088923B /* Dip.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0980D9971DA1153A0088923B /* Dip.framework */; };
 		0980D99A1DA1153A0088923B /* DipUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0980D9981DA1153A0088923B /* DipUI.framework */; };
-		0980D99C1DA118E50088923B /* Dip.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0980D99B1DA118E50088923B /* Dip.generated.swift */; };
 		09AD600D1DA6FB5500AA0076 /* Dip.base.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09AD600B1DA6FB5500AA0076 /* Dip.base.swift */; };
 		09AD600E1DA6FB5500AA0076 /* Dip.listModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09AD600C1DA6FB5500AA0076 /* Dip.listModule.swift */; };
+		09FC483F1DAF8AA500566AA8 /* Dip.configure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FC483E1DAF8AA500566AA8 /* Dip.configure.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,9 +25,9 @@
 		0980D9921DA1144E0088923B /* CompositionRoot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompositionRoot.swift; sourceTree = "<group>"; };
 		0980D9971DA1153A0088923B /* Dip.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Dip.framework; path = Carthage/Build/iOS/Dip.framework; sourceTree = "<group>"; };
 		0980D9981DA1153A0088923B /* DipUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DipUI.framework; path = Carthage/Build/iOS/DipUI.framework; sourceTree = "<group>"; };
-		0980D99B1DA118E50088923B /* Dip.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Dip.generated.swift; path = DipGenTest/Dip.generated.swift; sourceTree = SOURCE_ROOT; };
 		09AD600B1DA6FB5500AA0076 /* Dip.base.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dip.base.swift; sourceTree = "<group>"; };
 		09AD600C1DA6FB5500AA0076 /* Dip.listModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dip.listModule.swift; sourceTree = "<group>"; };
+		09FC483E1DAF8AA500566AA8 /* Dip.configure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dip.configure.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,7 +65,7 @@
 			children = (
 				09AD600B1DA6FB5500AA0076 /* Dip.base.swift */,
 				09AD600C1DA6FB5500AA0076 /* Dip.listModule.swift */,
-				0980D99B1DA118E50088923B /* Dip.generated.swift */,
+				09FC483E1DAF8AA500566AA8 /* Dip.configure.swift */,
 				0980D9421DA026720088923B /* input.swift */,
 				0980D9921DA1144E0088923B /* CompositionRoot.swift */,
 				0980D94D1DA026BB0088923B /* DipGenTest.h */,
@@ -169,7 +169,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "dipgen -o \"$SRCROOT/$PRODUCT_NAME\"";
+			shellScript = "dipgen --output \"$SRCROOT/$PRODUCT_NAME\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -181,8 +181,8 @@
 				09AD600E1DA6FB5500AA0076 /* Dip.listModule.swift in Sources */,
 				0980D9931DA1144E0088923B /* CompositionRoot.swift in Sources */,
 				0980D9531DA026C00088923B /* input.swift in Sources */,
-				0980D99C1DA118E50088923B /* Dip.generated.swift in Sources */,
 				09AD600D1DA6FB5500AA0076 /* Dip.base.swift in Sources */,
+				09FC483F1DAF8AA500566AA8 /* Dip.configure.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -192,12 +192,14 @@
 		0980D93D1DA0265A0088923B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
 		0980D93E1DA0265A0088923B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -263,7 +265,6 @@
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -324,7 +325,6 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";

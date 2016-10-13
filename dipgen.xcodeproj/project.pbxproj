@@ -44,7 +44,7 @@
 		0980D98C1DA109A90088923B /* SourceKittenFramework.framework in Embed Frameworks into DipGenFramework */ = {isa = PBXBuildFile; fileRef = 649CABF91D7EDA3F00AA3C44 /* SourceKittenFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0980D98D1DA109A90088923B /* SWXMLHash.framework in Embed Frameworks into DipGenFramework */ = {isa = PBXBuildFile; fileRef = 649CABFA1D7EDA3F00AA3C44 /* SWXMLHash.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0980D98E1DA109A90088923B /* Yaml.framework in Embed Frameworks into DipGenFramework */ = {isa = PBXBuildFile; fileRef = 649CABFB1D7EDA3F00AA3C44 /* Yaml.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		09AD600A1DA6C53200AA0076 /* Dip.generated.stencil in Resources */ = {isa = PBXBuildFile; fileRef = 09AD60091DA6C53200AA0076 /* Dip.generated.stencil */; };
+		09AD600A1DA6C53200AA0076 /* Dip.configure.stencil in Resources */ = {isa = PBXBuildFile; fileRef = 09AD60091DA6C53200AA0076 /* Dip.configure.stencil */; };
 		09FC482D1DAC2C4700566AA8 /* ArgumentConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FC48241DAC2C4700566AA8 /* ArgumentConvertible.swift */; };
 		09FC482E1DAC2C4700566AA8 /* ArgumentDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FC48251DAC2C4700566AA8 /* ArgumentDescription.swift */; };
 		09FC482F1DAC2C4700566AA8 /* ArgumentParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FC48261DAC2C4700566AA8 /* ArgumentParser.swift */; };
@@ -139,7 +139,7 @@
 		0980D96A1DA107AE0088923B /* dipgen.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = dipgen.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0980D9731DA107AE0088923B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0980D9901DA10D840088923B /* Components.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Components.plist; sourceTree = "<group>"; };
-		09AD60091DA6C53200AA0076 /* Dip.generated.stencil */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Dip.generated.stencil; sourceTree = "<group>"; };
+		09AD60091DA6C53200AA0076 /* Dip.configure.stencil */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Dip.configure.stencil; sourceTree = "<group>"; };
 		09FC48241DAC2C4700566AA8 /* ArgumentConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArgumentConvertible.swift; sourceTree = "<group>"; };
 		09FC48251DAC2C4700566AA8 /* ArgumentDescription.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArgumentDescription.swift; sourceTree = "<group>"; };
 		09FC48261DAC2C4700566AA8 /* ArgumentParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArgumentParser.swift; sourceTree = "<group>"; };
@@ -236,7 +236,7 @@
 				0980D9251D9FF8CF0088923B /* StringExtensions.swift */,
 				092993771D9FE5FC00DA3EB7 /* Templates.swift */,
 				0958B9451DA5997D008C4C37 /* Dip.container.stencil */,
-				09AD60091DA6C53200AA0076 /* Dip.generated.stencil */,
+				09AD60091DA6C53200AA0076 /* Dip.configure.stencil */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -481,7 +481,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0958B9461DA5997D008C4C37 /* Dip.container.stencil in Resources */,
-				09AD600A1DA6C53200AA0076 /* Dip.generated.stencil in Resources */,
+				09AD600A1DA6C53200AA0076 /* Dip.configure.stencil in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
