@@ -4,10 +4,11 @@ import SourceKittenFramework
 import Xcode
 
 let main = command(
-    Option("output", ".", description: "Path to generated files."),
-    Flag("verbose", description: "Prints process information."),
+    Option("output", ".", flag: "o", description: "Path to generated files."),
+    Flag("no-factories", description: "If provided will not generate factories."),
+    Flag("verbose", flag: "v", description: "Prints process information."),
     help: "Annotations: \n\n\(DipAnnotation.allValues.map({ $0.help }).joinWithSeparator("\n\n"))"
-) { (outputPath, verbose) in
+) { (outputPath, noFactories, verbose) in
     do {
         let environment = try Environment(processInfo: NSProcessInfo())
         let project = try XCProjectFile(path: environment.projectFilePath)
@@ -33,7 +34,7 @@ let main = command(
         for container in processingResult {
             let fileName = "Dip.\(container.name).swift"
             if verbose { print("Generating \(fileName)")}
-            let content = try renderContainerTemplate(container, imports: imports, swiftVersion: environment.swiftVersion)
+            let content = try renderContainerTemplate(container, imports: imports, swiftVersion: environment.swiftVersion, noFactories: noFactories)
             let containerFileURL = NSURL(fileURLWithPath: fileName, relativeToURL: NSURL(fileURLWithPath: outputPath))
             try content.writeToURL(containerFileURL, atomically: true, encoding: NSUTF8StringEncoding)
         }

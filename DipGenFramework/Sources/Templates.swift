@@ -195,7 +195,7 @@ let namespace: Namespace = {
     return namespace
 }()
 
-public func renderContainerTemplate(container: Container, imports: Set<String>, swiftVersion: String) throws -> String {
+public func renderContainerTemplate(container: Container, imports: Set<String>, swiftVersion: String, noFactories: Bool) throws -> String {
     namespace.registerFilter("scope", filter: (swiftVersion >= "3.0") ? lowercase : capitalise)
 
     var imports = imports
@@ -206,13 +206,17 @@ public func renderContainerTemplate(container: Container, imports: Set<String>, 
         imports.insert("Dip")
     }
 
-    let context = Context(dictionary: ["container": container.contextValue, "imports": Array(imports)])
+    var contextDictionary: [String: Any] = ["container": container.contextValue, "imports": Array(imports)]
+    if noFactories {
+        contextDictionary["noFactories"] = noFactories
+    }
+    let context = Context(dictionary: contextDictionary)
     let template = try Template(named: "Dip.container.stencil", inBundle: NSBundle(forClass: FileProcessor.self))
     return try template.render(context, namespace: namespace)
 }
 
 public func renderCommonTemplate(containers: [Container]) throws -> String {
     let context = Context(dictionary: ["containers": Array(Set(containers.map({ $0.name })))])
-    let template = try Template(named: "Dip.generated.stencil", inBundle: NSBundle(forClass: FileProcessor.self))
+    let template = try Template(named: "Dip.configure.stencil", inBundle: NSBundle(forClass: FileProcessor.self))
     return try template.render(context, namespace: namespace)
 }

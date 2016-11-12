@@ -20,7 +20,7 @@ let {{ container.name }}Container = DependencyContainer { container in
     }{% endif %}{% endfor %}
 }
 
-class {{ container.name|titlecase }}Factory {
+{% ifnot noFactories %}class {{ container.name|titlecase }}Factory {
 
     private let container: DependencyContainer
 
@@ -32,4 +32,4 @@ class {{ container.name|titlecase }}Factory {
         return try! container.resolve({% if registration.tag %}tag: "{{ registration.tag }}"{% endif %}{% if registration.factory.arguments %}{% if registration.tag %}, {% endif %}arguments: {{ registration.factory.closure.internalArgumentsNames|join }}{% endif %})
     }
     {% endfor %}
-}
+}{% endif %}
