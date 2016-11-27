@@ -236,18 +236,19 @@ public class FileProcessor {
     func process(method declaration: SourceKitDeclaration) -> MethodProcessingResult? {
         let name = declaration[Structure.Key.name] as! String
         if (declaration.kind == .FunctionMethodInstance && name.hasPrefix("init")) ||
-            declaration.kind == .FunctionMethodStatic || declaration.kind == .FunctionMethodClass,
-            let docs = docs(declaration)
+            declaration.kind == .FunctionMethodStatic || declaration.kind == .FunctionMethodClass
         {
             var designated = false
             var registrationArgumentsNames = [String]()
-            for line in docs.lines() {
-                designated = designated || line.contains(dipAnnotation: .designated)
-                line.contains(dipAnnotation: .arguments, modifier: { arguments in
-                    registrationArgumentsNames = arguments?
-                        .componentsSeparatedByString(",")
-                        .map({ $0.trimmed(.whitespaceCharacterSet()) }) ?? []
-                })
+            if let docs = docs(declaration) {
+                for line in docs.lines() {
+                    designated = designated || line.contains(dipAnnotation: .designated)
+                    line.contains(dipAnnotation: .arguments, modifier: { arguments in
+                        registrationArgumentsNames = arguments?
+                            .componentsSeparatedByString(",")
+                            .map({ $0.trimmed(.whitespaceCharacterSet()) }) ?? []
+                    })
+                }
             }
             var methodArguments: [Argument] = []
             let externalNames = name.methodArgumentsExternalNames()
