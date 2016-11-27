@@ -196,7 +196,7 @@ let namespace: Namespace = {
 }()
 
 public func renderContainerTemplate(container: Container, imports: Set<String>, swiftVersion: String, noFactories: Bool) throws -> String {
-    namespace.registerFilter("scope", filter: (swiftVersion >= "3.0") ? lowercase : capitalise)
+    namespace.registerFilter("scope", filter: (swiftVersion >= "3.0") ? StringFilters.camelcase : StringFilters.titlecase)
 
     var imports = imports
     if container.isUIContainer {
