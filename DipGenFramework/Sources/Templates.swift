@@ -35,7 +35,7 @@ public struct Registration {
     let registerAs: String?
     let tag: String?
     let factory: Factory
-    let implements: [String]
+    let implements: [(String, String?)]
     let resolvingProperties: [ResolvingProperty]
     let storyboardInstantiatable: Bool
     
@@ -55,7 +55,13 @@ public struct Registration {
         }
         contextValue["factory"] = factory.contextValue
         if !implements.isEmpty {
-            contextValue["implements"] = implements.map({ "\($0).self" }).joinWithSeparator(", ")
+            contextValue["implements"] = implements.map({ (type, tag) -> [String: String] in
+                var value: [String: String] = ["type": "\(type).self"]
+                if let tag = tag {
+                    value["tag"] = tag
+                }
+                return value
+            })
         }
         if !resolvingProperties.isEmpty {
             contextValue["resolvingProperties"] = resolvingProperties.map({ $0.contextValue })

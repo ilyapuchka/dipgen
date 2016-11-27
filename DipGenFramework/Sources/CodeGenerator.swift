@@ -100,7 +100,7 @@ public class FileProcessor {
         var constructorToRegister: String?
         var tagToRegister: String?
         var scopeToRegister: String?
-        var implementsToRegister = [String]()
+        var implementsToRegister = [(String, String?)]()
         var storyboardInstantiatable: Bool = false
         var shouldRegister = false
         
@@ -117,9 +117,16 @@ public class FileProcessor {
                     }
                 }) ||
                 line.contains(dipAnnotation: .implements, modifier: { implements in
-                    implementsToRegister = implements?
+                    if let moreImplementsToRegister: [(String, String?)] = implements?
                         .componentsSeparatedByString(",")
-                        .map({ $0.trimmed(.whitespaceCharacterSet()) }) ?? []
+                        .map({ $0.trimmed(.whitespaceCharacterSet()) })
+                        .map({
+                            let typeAndMaybeTag = $0.componentsSeparatedByString("(")
+                            if typeAndMaybeTag.count == 1 { return (typeAndMaybeTag[0], nil) }
+                            else { return (typeAndMaybeTag[0], typeAndMaybeTag[1].trim(")").trim("\""))}
+                        }) {
+                        implementsToRegister.appendContentsOf(moreImplementsToRegister)
+                    }
                 }) ||
                 line.contains(dipAnnotation: .storyboardInstantiatable, modifier: { _ in
                     storyboardInstantiatable = true
