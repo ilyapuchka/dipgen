@@ -145,9 +145,6 @@ public class FileProcessor {
             shouldRegister = shouldRegister || !propertiesToResolve.isEmpty
             
             constructor = process(methods: substructure)
-            if constructor?.designated == true {
-                shouldRegister = shouldRegister || constructor != nil
-            }
             registrationArguments = constructor?.registrationArguments ?? []
             allConstructorArguments = constructor?.arguments ?? []
         }
@@ -156,6 +153,10 @@ public class FileProcessor {
             constructor = nil
             registrationArguments = []
             allConstructorArguments = []
+        }
+        
+        if constructorToRegister == nil && constructor == nil && storyboardInstantiatable {
+            constructorToRegister = "init()"
         }
         
         if shouldRegister, let constructorName = constructorToRegister ?? constructor?.name {
