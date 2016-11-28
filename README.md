@@ -39,7 +39,7 @@ Here is the list of available annotations:
 
 - `tag Tag` -- Optional tag to register component for. If no `name` annotation provided tag will be appended to default factory name.
 
-- `implements TypeName, ...` -- List of types implementd by component that can be resolved by the same definition. Will be used for type-forwarding.
+- `implements TypeName[(tag)], ...` -- List of types with optional tags implementd by component that can be resolved by the same definition. Will be used for type-forwarding.
 
 - `scope Scope` -- Scope to register component in. If not provided default scope defined by Dip will be applied.
 
@@ -57,7 +57,6 @@ import UIKit
 
 /**
  @dip.storyboardInstantiatable
- @dip.constructor init
  */
 class ListViewController: UIViewController {}
 
@@ -118,7 +117,9 @@ let baseContainer = DependencyContainer { container in
 	unowned let container = container
 	DependencyContainer.uiContainers.append(container)
 
-	container.register(.Shared, factory: ListViewController.init)
+	container.register(.Shared, factory: {
+        ListViewController.initi()
+    })
 }
 
 class BaseFactory {
@@ -144,7 +145,9 @@ import Dip
 let listModuleContainer = DependencyContainer { container in 
 	unowned let container = container
 
-	let listWireframe = container.register(.Unique, type: ListWireframe.self, tag: "some tag", factory: ListWireframe.init(rootWireframe:addWireframe:listPresenter:))
+	let listWireframe = container.register(.Unique, type: ListWireframe.self, tag: "some tag", factory: { 
+        try ListWireframe.init(rootWireframe: container.resolve(), addWireframe: container.resolve(), listPresenter: container.resolve())
+    })
 		.implements(SomeProtocol.self)
 		.resolvingProperties { container, resolved in 
 			resolved.addWireframe = try container.resolve(tag: "tag") as AddWireframe
