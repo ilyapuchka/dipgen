@@ -9,15 +9,16 @@ let {{ container.name }}Container = DependencyContainer { container in
     unowned let container = container{% if container.isUIContainer %}
     DependencyContainer.uiContainers.append(container){% endif %}
     {% for registration in container.registrations %}
-    container.register({% if registration.scope %}.{{ registration.scope|scope }}, {% endif %}{% if registration.registerAs %}type: {{ registration.registerAs }}.self, {% endif %}{% if registration.tag %}tag: "{{ registration.tag }}", {% endif %}factory: {% if registration.factory.arguments %}{ {{ registration.factory.closure.argumentsNames|join }} in
-        {{ registration.factory.closure.body }}
-    }{% else %}{{ registration.factory.type }}.{{ registration.factory.constructor }}{% endif %}){% if registration.implements %}
-        .implements({{ registration.implements }}){% endif %}{% if registration.resolvingProperties %}
-        .resolvingProperties { container, resolved in {% if registration.instanceType %}
+    container.register({% if registration.scope %}.{{ registration.scope|scope }}, {% endif %}{% if registration.tag %}tag: "{{ registration.tag }}", {% endif %}factory: { {% if registration.factory.arguments %}{{ registration.factory.closure.argumentsNames|join }} in{% endif %}
+        {{ registration.factory.closure.body }}{% if registration.registerAs %} as {{ registration.registerAs }}{% endif %}
+    }){% if registration.implements %}{% for implements in registration.implements %}
+        .implements({{ implements.type }}{% if implements.tag %}, tag: "{{ implements.tag }}"{% endif %}){% endfor %}{% endif %}{% if registration.resolvingProperties %}
+        .resolvingProperties { container, resolved in {% if registration.registerAs %}
             let resolved = resolved as! {{ registration.instanceType }}
             {% endif %}{% for property in registration.resolvingProperties %}
             resolved.{{ property.name }} = try container.resolve({% if property.tag %}tag: "{{ property.tag }}"{% endif %}){% if property.resolveAs %} as {{ property.resolveAs }}{% endif %}{%endfor%}
-    }{% endif %}{% endfor %}
+    }{% endif %}
+    {% endfor %}
 }
 
 {% ifnot noFactories %}class {{ container.name|titlecase }}Factory {

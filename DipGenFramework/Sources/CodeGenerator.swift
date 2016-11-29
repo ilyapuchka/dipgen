@@ -100,7 +100,7 @@ public class FileProcessor {
         var constructorToRegister: String?
         var tagToRegister: String?
         var scopeToRegister: String?
-        var implementsToRegister = [String]()
+        var implementsToRegister = [(String, String?)]()
         var storyboardInstantiatable: Bool = false
         var shouldRegister = false
         
@@ -117,9 +117,16 @@ public class FileProcessor {
                     }
                 }) ||
                 line.contains(dipAnnotation: .implements, modifier: { implements in
-                    implementsToRegister = implements?
+                    if let moreImplementsToRegister: [(String, String?)] = implements?
                         .componentsSeparatedByString(",")
-                        .map({ $0.trimmed(.whitespaceCharacterSet()) }) ?? []
+                        .map({ $0.trimmed(.whitespaceCharacterSet()) })
+                        .map({
+                            let typeAndMaybeTag = $0.componentsSeparatedByString("(")
+                            if typeAndMaybeTag.count == 1 { return (typeAndMaybeTag[0], nil) }
+                            else { return (typeAndMaybeTag[0], typeAndMaybeTag[1].trim(")").trim("\""))}
+                        }) {
+                        implementsToRegister.appendContentsOf(moreImplementsToRegister)
+                    }
                 }) ||
                 line.contains(dipAnnotation: .storyboardInstantiatable, modifier: { _ in
                     storyboardInstantiatable = true
@@ -138,9 +145,6 @@ public class FileProcessor {
             shouldRegister = shouldRegister || !propertiesToResolve.isEmpty
             
             constructor = process(methods: substructure)
-            if constructor?.designated == true {
-                shouldRegister = shouldRegister || constructor != nil
-            }
             registrationArguments = constructor?.registrationArguments ?? []
             allConstructorArguments = constructor?.arguments ?? []
         }
@@ -149,6 +153,10 @@ public class FileProcessor {
             constructor = nil
             registrationArguments = []
             allConstructorArguments = []
+        }
+        
+        if constructorToRegister == nil && constructor == nil && storyboardInstantiatable {
+            constructorToRegister = "init()"
         }
         
         if shouldRegister, let constructorName = constructorToRegister ?? constructor?.name {
@@ -236,18 +244,19 @@ public class FileProcessor {
     func process(method declaration: SourceKitDeclaration) -> MethodProcessingResult? {
         let name = declaration[Structure.Key.name] as! String
         if (declaration.kind == .FunctionMethodInstance && name.hasPrefix("init")) ||
-            declaration.kind == .FunctionMethodStatic || declaration.kind == .FunctionMethodClass,
-            let docs = docs(declaration)
+            declaration.kind == .FunctionMethodStatic || declaration.kind == .FunctionMethodClass
         {
             var designated = false
             var registrationArgumentsNames = [String]()
-            for line in docs.lines() {
-                designated = designated || line.contains(dipAnnotation: .designated)
-                line.contains(dipAnnotation: .arguments, modifier: { arguments in
-                    registrationArgumentsNames = arguments?
-                        .componentsSeparatedByString(",")
-                        .map({ $0.trimmed(.whitespaceCharacterSet()) }) ?? []
-                })
+            if let docs = docs(declaration) {
+                for line in docs.lines() {
+                    designated = designated || line.contains(dipAnnotation: .designated)
+                    line.contains(dipAnnotation: .arguments, modifier: { arguments in
+                        registrationArgumentsNames = arguments?
+                            .componentsSeparatedByString(",")
+                            .map({ $0.trimmed(.whitespaceCharacterSet()) }) ?? []
+                    })
+                }
             }
             var methodArguments: [Argument] = []
             let externalNames = name.methodArgumentsExternalNames()
