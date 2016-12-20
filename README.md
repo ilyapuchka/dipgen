@@ -193,7 +193,8 @@ extension DependencyContainer {
 
 ## Installation
 
-Download project and run `make install` from it's source root. You need [Carthage](https://github.com/Carthage/Carthage) to be installed.
+Prefered way to install dipgen is to use `DipGen.pkg` attached to the release.
+Or you can build from source downloading project and running `carthage build --platform macOS && make install` from it's source root. You need [Carthage](https://github.com/Carthage/Carthage) to be installed.
 
 
 ###TODO:
